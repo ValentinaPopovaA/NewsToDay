@@ -21,7 +21,7 @@ class NewsService {
     
     // Получение популярных новостей по категориям с обработкой ошибок
     func fetchTopNewsByCategory(category: String, completion: @escaping (Result<[Article], NetworkError>) -> Void) {
-        let urlString = "\(baseUrl)top-headlines?category=\(category)&apiKey=\(apiKey)&country=us"
+        let urlString = "\(baseUrl)top-headlines?category=\(category)&apiKey=\(apiKey)"
         
         guard let url = URL(string: urlString) else {
             completion(.failure(.badURL))
