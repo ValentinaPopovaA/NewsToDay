@@ -14,7 +14,7 @@ class DetailNewsViewController: UIViewController {
     private let authorLabel = UILabel()
     private let descriptionLabel = UILabel()
 
-    var selectedCategories: [String] = ["sport", "fashion"]
+    var selectedCategories = NewsCategory.sports.rawValue
 
     private let newsService = NewsService()
 
@@ -41,6 +41,7 @@ class DetailNewsViewController: UIViewController {
 
         descriptionLabel.font = UIFont.systemFont(ofSize: 16)
         descriptionLabel.numberOfLines = 0
+        descriptionLabel.lineBreakMode = .byWordWrapping
         view.addSubview(descriptionLabel)
 
         setupConstraints()
@@ -69,12 +70,13 @@ class DetailNewsViewController: UIViewController {
             descriptionLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 16),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -16)
         ])
     }
 
     // Загрузка случайной новости из выбранных категорий
     private func loadRandomArticle() {
-        newsService.fetchTopNewsByCategory(category: selectedCategories.randomElement()!) { [weak self] result in
+        newsService.fetchTopNewsByCategory(category: selectedCategories) { [weak self] result in
             switch result {
             case .success(let articles):
                 if let randomArticle = articles.randomElement() {

@@ -21,6 +21,7 @@
 		A714A0C52CC679D500B6C123 /* DetailNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0C42CC679D500B6C123 /* DetailNewsViewController.swift */; };
 		A714A0CA2CC789CC00B6C123 /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0C92CC789CC00B6C123 /* NewsService.swift */; };
 		A714A0CC2CC789F700B6C123 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0CB2CC789F700B6C123 /* ImageLoader.swift */; };
+		A714A0CE2CC7CF1100B6C123 /* NewsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0CD2CC7CF1100B6C123 /* NewsCategory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		A714A0C42CC679D500B6C123 /* DetailNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNewsViewController.swift; sourceTree = "<group>"; };
 		A714A0C92CC789CC00B6C123 /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
 		A714A0CB2CC789F700B6C123 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		A714A0CD2CC7CF1100B6C123 /* NewsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCategory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				A714A0BC2CC6427000B6C123 /* News.swift */,
+				A714A0CD2CC7CF1100B6C123 /* NewsCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				A714A0CC2CC789F700B6C123 /* ImageLoader.swift in Sources */,
 				A714A0C52CC679D500B6C123 /* DetailNewsViewController.swift in Sources */,
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
+				A714A0CE2CC7CF1100B6C123 /* NewsCategory.swift in Sources */,
 				08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */,
 				08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */,
 				08F97D532CC6B5FC003AAFC1 /* UIButton+Extansion.swift in Sources */,
