@@ -19,3 +19,7 @@ struct Article: Decodable {
     let publishedAt: String?
     let category: String?
 }
+
+struct Source: Decodable {
+    let articles: [Article]
+}
