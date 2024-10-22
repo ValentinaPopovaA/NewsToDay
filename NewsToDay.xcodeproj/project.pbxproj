@@ -16,6 +16,8 @@
 		A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0A42CC578C700B6C123 /* MainViewController.swift */; };
 		A714A0AA2CC578CA00B6C123 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A714A0A92CC578CA00B6C123 /* Assets.xcassets */; };
 		A714A0AD2CC578CA00B6C123 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A714A0AB2CC578CA00B6C123 /* LaunchScreen.storyboard */; };
+		A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */; };
+		A714A0D32CC7D59D00B6C123 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		A714A0A92CC578CA00B6C123 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A714A0AC2CC578CA00B6C123 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A714A0AE2CC578CA00B6C123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
+		A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 				08F97D4C2CC68D40003AAFC1 /* UIColor+Extension.swift */,
 				08F97D502CC6B253003AAFC1 /* UIFont+Extension.swift */,
 				08F97D522CC6B5FC003AAFC1 /* UIButton+Extansion.swift */,
+				A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -74,6 +79,7 @@
 			children = (
 				A714A0B42CC57B9200B6C123 /* App */,
 				A714A0B62CC57C7D00B6C123 /* MainScreen */,
+				A714A0D12CC7D34E00B6C123 /* TermsScreen */,
 				08F97D492CC68A4A003AAFC1 /* Extensions */,
 				A714A0B52CC57C3E00B6C123 /* Resources */,
 			);
@@ -106,6 +112,14 @@
 				A714A0A42CC578C700B6C123 /* MainViewController.swift */,
 			);
 			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		A714A0D12CC7D34E00B6C123 /* TermsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */,
+			);
+			path = TermsScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +198,8 @@
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
 				08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */,
 				08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */,
+				A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */,
+				A714A0D32CC7D59D00B6C123 /* UILabel+Ext.swift in Sources */,
 				08F97D532CC6B5FC003AAFC1 /* UIButton+Extansion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
