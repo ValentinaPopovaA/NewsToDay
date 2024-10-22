@@ -18,6 +18,11 @@
 		A714A0AD2CC578CA00B6C123 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A714A0AB2CC578CA00B6C123 /* LaunchScreen.storyboard */; };
 		A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */; };
 		A714A0D32CC7D59D00B6C123 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */; };
+		A714A0D52CC7ED4000B6C123 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0D42CC7ED4000B6C123 /* FavoritesManager.swift */; };
+		A714A0D82CC7EE0F00B6C123 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0D72CC7EE0F00B6C123 /* FavoritesView.swift */; };
+		A714A0DA2CC7EE5F00B6C123 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0D92CC7EE5F00B6C123 /* FavoritesViewController.swift */; };
+		A714A0DC2CC7EF0600B6C123 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0DB2CC7EF0600B6C123 /* EmptyStateView.swift */; };
+		A714A0DE2CC815EC00B6C123 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0DD2CC815EC00B6C123 /* FavoritesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +39,11 @@
 		A714A0AE2CC578CA00B6C123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		A714A0D42CC7ED4000B6C123 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
+		A714A0D72CC7EE0F00B6C123 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		A714A0D92CC7EE5F00B6C123 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		A714A0DB2CC7EF0600B6C123 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		A714A0DD2CC815EC00B6C123 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +91,7 @@
 				A714A0B62CC57C7D00B6C123 /* MainScreen */,
 				A714A0D12CC7D34E00B6C123 /* TermsScreen */,
 				08F97D492CC68A4A003AAFC1 /* Extensions */,
+				A714A0D62CC7ED4600B6C123 /* FavoritesScreen */,
 				A714A0B52CC57C3E00B6C123 /* Resources */,
 			);
 			path = NewsToDay;
@@ -120,6 +131,18 @@
 				A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */,
 			);
 			path = TermsScreen;
+			sourceTree = "<group>";
+		};
+		A714A0D62CC7ED4600B6C123 /* FavoritesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A714A0D42CC7ED4000B6C123 /* FavoritesManager.swift */,
+				A714A0DD2CC815EC00B6C123 /* FavoritesTableViewCell.swift */,
+				A714A0D72CC7EE0F00B6C123 /* FavoritesView.swift */,
+				A714A0D92CC7EE5F00B6C123 /* FavoritesViewController.swift */,
+				A714A0DB2CC7EF0600B6C123 /* EmptyStateView.swift */,
+			);
+			path = FavoritesScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,13 +216,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A714A0D82CC7EE0F00B6C123 /* FavoritesView.swift in Sources */,
 				A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */,
 				A714A0A12CC578C700B6C123 /* AppDelegate.swift in Sources */,
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
 				08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */,
 				08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */,
+				A714A0DC2CC7EF0600B6C123 /* EmptyStateView.swift in Sources */,
+				A714A0DA2CC7EE5F00B6C123 /* FavoritesViewController.swift in Sources */,
 				A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */,
+				A714A0DE2CC815EC00B6C123 /* FavoritesTableViewCell.swift in Sources */,
 				A714A0D32CC7D59D00B6C123 /* UILabel+Ext.swift in Sources */,
+				A714A0D52CC7ED4000B6C123 /* FavoritesManager.swift in Sources */,
 				08F97D532CC6B5FC003AAFC1 /* UIButton+Extansion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
