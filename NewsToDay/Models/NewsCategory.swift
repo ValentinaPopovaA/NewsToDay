@@ -5,17 +5,19 @@
 //  Created by Валентина Попова on 22.10.2024.
 //
 
-enum NewsCategory: String, CaseIterable {
-    case business = "business"
-    case entertainment = "entertainment"
-    case general = "general"
-    case health = "health"
-    case science = "science"
-    case sports = "sports"
-    case technology = "technology"
-    
-    // Метод для получения всех категорий
-    static func allCategories() -> [String] {
-        return NewsCategory.allCases.map { $0.rawValue }
-    }
+import Foundation
+
+struct Category: Equatable, Codable, Hashable {
+    let name: String
+    let icon: String
+}
+
+enum Categories {
+    static let business = "business"
+    static let entertainment = "entertainment"
+    static let general = "general"
+    static let health = "health"
+    static let science = "science"
+    static let sports = "sports"
+    static let technology = "technology"
 }

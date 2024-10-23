@@ -9,39 +9,56 @@ import UIKit
 
 class DetailNewsViewController: UIViewController {
     
-    private let imageView = UIImageView()
-    private let titleLabel = UILabel()
-    private let authorLabel = UILabel()
-    private let descriptionLabel = UILabel()
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let authorLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .gray
+        return label
+    }()
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
+    
+    // Менеджер категорий
+    private let categoryManager = CategoryManager()
 
-    var selectedCategories = NewsCategory.sports.rawValue
-
-    private let newsService = NewsService()
+    // Сервис для работы с сетью
+    private let newsService = DefaultNetworkService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        
-        loadRandomArticle()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkAndLoadRandomArticle()
     }
 
     private func setupUI() {
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
         view.addSubview(imageView)
-
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        titleLabel.numberOfLines = 0
         view.addSubview(titleLabel)
-
-        authorLabel.font = UIFont.systemFont(ofSize: 16)
-        authorLabel.textColor = .gray
         view.addSubview(authorLabel)
-
-        descriptionLabel.font = UIFont.systemFont(ofSize: 16)
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .byWordWrapping
         view.addSubview(descriptionLabel)
 
         setupConstraints()
@@ -74,12 +91,27 @@ class DetailNewsViewController: UIViewController {
         ])
     }
 
-    // Загрузка случайной новости из выбранных категорий
-    private func loadRandomArticle() {
-        newsService.fetchTopNewsByCategory(category: selectedCategories) { [weak self] result in
+    // Проверка на наличие выбранных категорий и загрузка случайной новости
+    private func checkAndLoadRandomArticle() {
+        if categoryManager.selectedCellIndex.isEmpty {
+            categoryManager.showAlertNoCategories(vc: self)
+        } else {
+            // Получаем случайную категорию из выбранных
+            let selectedCategoryIndex = categoryManager.selectedCellIndex.randomElement()!
+            let selectedCategory = categoryManager.all[selectedCategoryIndex].name
+            
+            loadRandomArticle(category: selectedCategory)
+        }
+    }
+
+    // Загрузка случайной статьи по категории
+    private func loadRandomArticle(category: String) {
+        let request = TopHeadlinesRequest(category: Category(name: category, icon: "📈"), page: 1)
+
+        newsService.request(request) { [weak self] result in
             switch result {
             case .success(let articles):
-                if let randomArticle = articles.randomElement() {
+                if let randomArticle = articles!.randomElement() {
                     DispatchQueue.main.async {
                         self?.displayArticle(randomArticle)
                     }
@@ -92,45 +124,30 @@ class DetailNewsViewController: UIViewController {
         }
     }
 
-    // Отображение данных статьи
-    private func displayArticle(_ article: Article) {
+    // Отображение статьи на экране
+    private func displayArticle(_ article: News) {
         titleLabel.text = article.title
         authorLabel.text = "Автор: \(article.author ?? "Неизвестно")"
         descriptionLabel.text = article.description
-        
-        if let imageUrlString = article.urlToImage, let imageUrl = URL(string: imageUrlString) {
-            loadImage(from: imageUrl)
+
+        if let imageUrlString = article.urlToImage {
+            loadImage(from: imageUrlString)
         }
     }
 
-    // Асинхронная загрузка изображения через URLSession
-    private func loadImage(from url: URL) {
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let data = data, error == nil else {
-                print("Ошибка загрузки изображения: \(error?.localizedDescription ?? "Неизвестная ошибка")")
-                return
-            }
+    // Загрузка изображения по URL с использованием ImageClient
+    private func loadImage(from url: String) {
+        ImageClient.shared.setImage(from: url, placeholderImage: nil) { [weak self] image in
             DispatchQueue.main.async {
-                self?.imageView.image = UIImage(data: data)
+                self?.imageView.image = image
             }
-        }.resume()
+        }
     }
 
-    // Обработка ошибок
-    private func handleError(_ error: NetworkError) {
-        var message = ""
-        
-        switch error {
-        case .badURL:
-            message = "Неправильный URL."
-        case .noData:
-            message = "Нет данных."
-        case .decodingError:
-            message = "Ошибка при обработке данных."
-        case .serverError(let description):
-            message = "Ошибка сервера: \(description)"
-        }
-        
-        print("Ошибка: \(message)")
+    // Обработка ошибок при загрузке данных
+    private func handleError(_ error: Error) {
+        let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ок", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
