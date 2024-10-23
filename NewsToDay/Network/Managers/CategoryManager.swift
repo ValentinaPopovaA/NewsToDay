@@ -32,7 +32,7 @@ class CategoryManager: CategoryManagerProtocol {
                  icon: "🏈"),
     ]
     
-    var selectedCellIndex: [Int] = []
+    var selectedCellIndex: [Int] = [5]
     
     // MARK: - Alert func
     func showAlertNoCategories(vc: UIViewController) {
