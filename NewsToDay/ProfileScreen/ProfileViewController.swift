@@ -133,7 +133,11 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func termsViewTapped() {
-        print("terms tapped!")
+        let termsViewController = TermsViewController()
+        
+        termsViewController.modalTransitionStyle = .coverVertical
+        termsViewController.modalPresentationStyle = .fullScreen
+        self.present(termsViewController, animated: true, completion: nil)
     }
     
     @objc private func signOutViewTapped() {
