@@ -23,7 +23,7 @@ class CategoryManager: CategoryManagerProtocol {
         Category(name: Categories.entertainment,
                  icon: "🎥"),
         Category(name: Categories.health,
-                 icon: "🏃🏼‍♀️"),
+                 icon: "🥑"),
         Category(name: Categories.science,
                  icon: "🧬"),
         Category(name: Categories.technology,
@@ -32,7 +32,7 @@ class CategoryManager: CategoryManagerProtocol {
                  icon: "🏈"),
     ]
     
-    var selectedCellIndex: [Int] = [5]
+    var selectedCellIndex: [Int] = [0, 1, 2, 3, 4, 5, 6]
     
     // MARK: - Alert func
     func showAlertNoCategories(vc: UIViewController) {
