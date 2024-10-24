@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		08F97D4F2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08F97D4E2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf */; };
 		08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F97D502CC6B253003AAFC1 /* UIFont+Extension.swift */; };
 		08F97D532CC6B5FC003AAFC1 /* UIButton+Extansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F97D522CC6B5FC003AAFC1 /* UIButton+Extansion.swift */; };
+		188D8E8A2CC9FAC5004FF616 /* UILAbel + Extancion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D8E892CC9FAB7004FF616 /* UILAbel + Extancion.swift */; };
 		A714A0A12CC578C700B6C123 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0A02CC578C700B6C123 /* AppDelegate.swift */; };
 		A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0A22CC578C700B6C123 /* SceneDelegate.swift */; };
 		A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0A42CC578C700B6C123 /* MainViewController.swift */; };
@@ -25,6 +26,7 @@
 		08F97D4E2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
 		08F97D502CC6B253003AAFC1 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		08F97D522CC6B5FC003AAFC1 /* UIButton+Extansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extansion.swift"; sourceTree = "<group>"; };
+		188D8E892CC9FAB7004FF616 /* UILAbel + Extancion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILAbel + Extancion.swift"; sourceTree = "<group>"; };
 		A714A09D2CC578C700B6C123 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A714A0A02CC578C700B6C123 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A714A0A22CC578C700B6C123 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +37,10 @@
 		A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		188D8E7D2CC9F72D004FF616 /* OnboardingScreen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingScreen; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A714A09A2CC578C700B6C123 /* Frameworks */ = {
@@ -50,6 +56,7 @@
 		08F97D492CC68A4A003AAFC1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				188D8E892CC9FAB7004FF616 /* UILAbel + Extancion.swift */,
 				08F97D4C2CC68D40003AAFC1 /* UIColor+Extension.swift */,
 				08F97D502CC6B253003AAFC1 /* UIFont+Extension.swift */,
 				08F97D522CC6B5FC003AAFC1 /* UIButton+Extansion.swift */,
@@ -77,6 +84,7 @@
 		A714A09F2CC578C700B6C123 /* NewsToDay */ = {
 			isa = PBXGroup;
 			children = (
+				188D8E7D2CC9F72D004FF616 /* OnboardingScreen */,
 				A714A0B42CC57B9200B6C123 /* App */,
 				A714A0B62CC57C7D00B6C123 /* MainScreen */,
 				A714A0D12CC7D34E00B6C123 /* TermsScreen */,
@@ -137,6 +145,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				188D8E7D2CC9F72D004FF616 /* OnboardingScreen */,
+			);
 			name = NewsToDay;
 			productName = NewsToDay;
 			productReference = A714A09D2CC578C700B6C123 /* NewsToDay.app */;
@@ -193,10 +204,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				188D8E522CC93850004FF616 /* UIView + Extansion.swift in Sources */,
-				188D8E542CC93ABE004FF616 /* UILabel + Extancion.swift in Sources */,
 				A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */,
 				A714A0A12CC578C700B6C123 /* AppDelegate.swift in Sources */,
+				188D8E8A2CC9FAC5004FF616 /* UILAbel + Extancion.swift in Sources */,
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
 				08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */,
 				08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */,
