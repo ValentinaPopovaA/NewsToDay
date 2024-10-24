@@ -11,6 +11,7 @@
 		08F97D4F2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08F97D4E2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf */; };
 		08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F97D502CC6B253003AAFC1 /* UIFont+Extension.swift */; };
 		08F97D532CC6B5FC003AAFC1 /* UIButton+Extansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F97D522CC6B5FC003AAFC1 /* UIButton+Extansion.swift */; };
+		08F97D552CC80923003AAFC1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F97D542CC80923003AAFC1 /* TabBarController.swift */; };
 		A714A0A12CC578C700B6C123 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0A02CC578C700B6C123 /* AppDelegate.swift */; };
 		A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0A22CC578C700B6C123 /* SceneDelegate.swift */; };
 		A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0A42CC578C700B6C123 /* MainViewController.swift */; };
@@ -25,6 +26,7 @@
 		08F97D4E2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
 		08F97D502CC6B253003AAFC1 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		08F97D522CC6B5FC003AAFC1 /* UIButton+Extansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extansion.swift"; sourceTree = "<group>"; };
+		08F97D542CC80923003AAFC1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		A714A09D2CC578C700B6C123 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A714A0A02CC578C700B6C123 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A714A0A22CC578C700B6C123 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			children = (
 				A714A0A02CC578C700B6C123 /* AppDelegate.swift */,
 				A714A0A22CC578C700B6C123 /* SceneDelegate.swift */,
+				08F97D542CC80923003AAFC1 /* TabBarController.swift */,
 				A714A0AE2CC578CA00B6C123 /* Info.plist */,
 			);
 			path = App;
@@ -196,6 +199,7 @@
 				A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */,
 				A714A0A12CC578C700B6C123 /* AppDelegate.swift in Sources */,
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
+				08F97D552CC80923003AAFC1 /* TabBarController.swift in Sources */,
 				08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */,
 				08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */,
 				A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */,
