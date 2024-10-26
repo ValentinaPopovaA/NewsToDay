@@ -129,7 +129,11 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func languageViewTapped() {
-        print("language tapped!")
+        let languageVC = LanguageViewController()
+        
+        languageVC.modalTransitionStyle = .coverVertical
+        languageVC.modalPresentationStyle = .fullScreen
+        self.present(languageVC, animated: true, completion: nil)
     }
     
     @objc private func termsViewTapped() {
