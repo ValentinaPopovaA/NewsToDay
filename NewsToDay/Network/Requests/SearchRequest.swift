@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Запрос на поиск новостных статей на основе поискового запроса и номера страницы
 struct SearchResultRequest: DataRequest {
     var baseRequest: BaseRequest
     

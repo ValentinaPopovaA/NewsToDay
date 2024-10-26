@@ -7,21 +7,27 @@
 
 import Foundation
 
+// MARK: - Протокол для управления закладками новостей
+// Протокол для добавления, удаления и получения закладок новостей
 protocol PersistenceManagerProtocol {
     func updateWith(bookmark: News, actionType: PersistenceActionType, completed: @escaping (NewsError?) -> Void)
     func retreiveNews(completed: @escaping (Result<[News], NewsError>) -> Void)
     func save(bookmarks: [News]) -> NewsError?
 }
 
+// MARK: - Тип действия для управления закладками
+// Определение типа действия для добавления или удаления
 enum PersistenceActionType { case add, remove }
 
-
+// MARK: - Менеджер закладок
+// Класс для управления закладками новостей с сохранением в UserDefaults
 class PersistenceManager: PersistenceManagerProtocol {
     private let defaults = UserDefaults.standard
     
     static let shared = PersistenceManager()
     
-    // MARK: - Добавление или удаление избранного, принимает в функцию новость, выбирается случай, либо add либо remove
+    // MARK: - Добавление или удаление закладки
+    // Обновление списка закладок с учетом действия: добавить или удалить
     func updateWith(bookmark: News, actionType: PersistenceActionType, completed: @escaping (NewsError?) -> Void) {
         retreiveNews { result in
             switch result {
@@ -30,19 +36,21 @@ class PersistenceManager: PersistenceManagerProtocol {
                 switch actionType {
                 case .add:
                     
+                    // Проверка на существование закладки, если уже добавлена
                     guard !bookmarks.contains(bookmark) else {
-                        // if contains:
                         completed(.alreadyBookmarked)
                         return
                     }
                     
-                    // if you didn't add this user yet:
+                    // Добавление новой закладки
                     bookmarks.append(bookmark)
                     
                 case .remove:
+                    // Удаление закладки по URL
                     bookmarks.removeAll { $0.url == bookmark.url}
                 }
                 
+                // Сохранение обновленного списка закладок
                 completed(self.save(bookmarks: bookmarks))
                 
                 
@@ -52,15 +60,16 @@ class PersistenceManager: PersistenceManagerProtocol {
         }
     }
     
- // MARK: - Получение избранных новостей в виде [News], либо ошибка
+    // MARK: - Получение всех закладок
+    // Возвращает список новостей в закладках или ошибку, если что-то пошло не так
     func retreiveNews(completed: @escaping (Result<[News], NewsError>) -> Void) {
         guard let bookmarksData = defaults.object(forKey: Keys.bookmarks) as? Data else {
-            // if nil = no favorites
+            // Если данных нет, возвращает пустой массив
             completed(.success([]))
             return
         }
         
-        // decode into bookmarks array:
+        // Декодирование данных из UserDefaults в массив закладок
         do {
             let decoder = JSONDecoder()
             let bookmarks = try decoder.decode([News].self, from: bookmarksData)
@@ -72,13 +81,14 @@ class PersistenceManager: PersistenceManagerProtocol {
         
     }
     
+    // MARK: - Сохранение закладок
+    // Кодирует и сохраняет массив закладок в UserDefaults
     func save(bookmarks: [News]) -> NewsError? {
-        // encode:
         do {
             let encoder = JSONEncoder()
             let encodedBookmarks = try encoder.encode(bookmarks)
             
-            // save to dafaults:
+            // Сохранение данных в UserDefaults
             defaults.set(encodedBookmarks, forKey: Keys.bookmarks)
             return nil
         } catch {

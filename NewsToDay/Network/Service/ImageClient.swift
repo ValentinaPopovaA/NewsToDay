@@ -7,11 +7,15 @@
 
 import UIKit
 
+// MARK: - Сервис для работы с изображениями
+// Протокол для загрузки и установки изображений
 protocol ImageClientService {
     func downloadImage<Request: DataRequest>(request: Request, completion: @escaping (UIImage?, Error?) -> Void)
     func setImage(from url: String, placeholderImage: UIImage?, completion: @escaping (UIImage?) -> Void)
 }
 
+// MARK: - Класс ImageClient
+// Класс для загрузки изображений с использованием кэширования
 final class ImageClient {
     
     static let shared = ImageClient(
@@ -30,6 +34,7 @@ final class ImageClient {
         self.session = session
     }
     
+    // Асинхронная отправка изображения или ошибки через responseQueue
     private func dispatchImage(
         image: UIImage? = nil,
         error: Error? = nil,
@@ -47,6 +52,8 @@ final class ImageClient {
     }
 }
 
+// MARK: - Расширение ImageClient
+// Реализация методов протокола ImageClientService для загрузки и установки изображений
 extension ImageClient: ImageClientService {
     func downloadImage<Request: DataRequest>(request: Request,
                                              completion: @escaping (UIImage?, Error?) -> Void) {

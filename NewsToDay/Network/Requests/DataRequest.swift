@@ -15,6 +15,7 @@ enum HTTPMethod: String {
     case delete = "DELETE"
 }
 
+// Протокол, определяющий структуру для выполнения API-запросов
 protocol DataRequest {
     associatedtype Response
     

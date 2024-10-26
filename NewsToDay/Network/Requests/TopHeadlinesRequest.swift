@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Запрос на выборку главных заголовков на основе категории и номера страницы
 struct TopHeadlinesRequest: DataRequest {
     var baseRequest: BaseRequest
     

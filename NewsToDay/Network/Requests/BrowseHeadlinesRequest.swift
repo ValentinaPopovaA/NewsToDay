@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Запрос на просмотр ограниченного количества заголовков в определенной категории
 struct BrowseHeadlinesRequest: DataRequest {
     var baseRequest: BaseRequest
     

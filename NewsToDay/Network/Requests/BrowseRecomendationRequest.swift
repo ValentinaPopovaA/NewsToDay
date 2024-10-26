@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Запрос на получение рекомендуемых заголовков в указанной категории
 struct BrowseRecommendationRequest: DataRequest {
     var baseRequest: BaseRequest
     
