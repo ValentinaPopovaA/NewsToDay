@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
-        let rootViewController = TabBarController()
+        let rootViewController = LoginViewController()
         
         window.rootViewController = rootViewController
         self.window = window
