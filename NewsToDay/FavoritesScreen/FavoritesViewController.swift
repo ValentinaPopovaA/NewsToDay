@@ -11,7 +11,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     private let favoritesView = FavoritesView()
     private let favoritesManager = FavoritesManager()
 
-    private var favorites: [Article] = []
+    private var favorites: [News] = []
 
     override func loadView() {
         self.view = favoritesView
@@ -35,10 +35,10 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     // Тестовый метод - удалить
-    func createMockArticles() -> [Article] {
+    func createMockArticles() -> [News] {
         return [
-            Article(title: "A Simple Trick For Creating Color Palettes Quickly", description: "Learn how to create color palettes", author: "UI/UX Design", urlToImage: "https://example.com/image1.jpg", publishedAt: "2024-10-22", category: "Design"),
-            Article(title: "Six steps to creating a color palette", description: "Master the steps to make your own palette", author: "Art", urlToImage: "https://example.com/image2.jpg", publishedAt: "2024-10-22", category: "Art"),
+            News(title: "A Simple Trick For Creating Color Palettes Quickly", description: "Learn how to create color palettes", author: "UI/UX Design", urlToImage: "https://example.com/image1.jpg", publishedAt: "2024-10-22", category: "Design"),
+            News(title: "Six steps to creating a color palette", description: "Master the steps to make your own palette", author: "Art", urlToImage: "https://example.com/image2.jpg", publishedAt: "2024-10-22", category: "Art"),
 //            Article(title: "Creating Color Palette from world around you", description: "Get inspired by nature", author: "Colors", urlToImage: "https://example.com/image3.jpg", publishedAt: "2024-10-22", category: "Colors")
         ]
     }

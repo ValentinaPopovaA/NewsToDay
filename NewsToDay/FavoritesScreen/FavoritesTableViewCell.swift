@@ -66,7 +66,7 @@ final class FavoritesTableViewCell: UITableViewCell {
         ])
     }
     
-    func configure(with article: Article) {
+    func configure(with article: News) {
         titleLabel.text = article.title
         categoryLabel.text = article.category
         if let urlString = article.urlToImage, let url = URL(string: urlString) {
