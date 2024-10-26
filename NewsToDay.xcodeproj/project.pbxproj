@@ -21,6 +21,8 @@
 		A714A0D32CC7D59D00B6C123 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */; };
 		FCF32CE62CCA5E0C00828852 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF32CE52CCA5E0C00828852 /* ProfileViewController.swift */; };
 		FCF32CE92CCA5E4600828852 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF32CE82CCA5E4600828852 /* CustomView.swift */; };
+		FCF32CEB2CCD006B00828852 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF32CEA2CCD006B00828852 /* LanguageViewController.swift */; };
+		FCF32CEF2CCD19F500828852 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF32CEE2CCD19F500828852 /* LanguageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		FCF32CE52CCA5E0C00828852 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FCF32CE82CCA5E4600828852 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		FCF32CEA2CCD006B00828852 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
+		FCF32CEE2CCD19F500828852 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,7 @@
 				A714A0B62CC57C7D00B6C123 /* MainScreen */,
 				A714A0D12CC7D34E00B6C123 /* TermsScreen */,
 				FCF32CE72CCA5E1C00828852 /* ProfileScreen */,
+				FCF32CED2CCD007600828852 /* LanguageScreen */,
 				08F97D492CC68A4A003AAFC1 /* Extensions */,
 				A714A0B52CC57C3E00B6C123 /* Resources */,
 			);
@@ -137,6 +142,15 @@
 				FCF32CE82CCA5E4600828852 /* CustomView.swift */,
 			);
 			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		FCF32CED2CCD007600828852 /* LanguageScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FCF32CEA2CCD006B00828852 /* LanguageViewController.swift */,
+				FCF32CEE2CCD19F500828852 /* LanguageCell.swift */,
+			);
+			path = LanguageScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,10 +226,12 @@
 			files = (
 				A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */,
 				A714A0A12CC578C700B6C123 /* AppDelegate.swift in Sources */,
+				FCF32CEB2CCD006B00828852 /* LanguageViewController.swift in Sources */,
 				FCF32CE62CCA5E0C00828852 /* ProfileViewController.swift in Sources */,
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
 				08F97D552CC80923003AAFC1 /* TabBarController.swift in Sources */,
 				08F97D512CC6B253003AAFC1 /* UIFont+Extension.swift in Sources */,
+				FCF32CEF2CCD19F500828852 /* LanguageCell.swift in Sources */,
 				FCF32CE92CCA5E4600828852 /* CustomView.swift in Sources */,
 				08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */,
 				A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */,
