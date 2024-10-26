@@ -18,7 +18,6 @@
 		A714A0AA2CC578CA00B6C123 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A714A0A92CC578CA00B6C123 /* Assets.xcassets */; };
 		A714A0AD2CC578CA00B6C123 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A714A0AB2CC578CA00B6C123 /* LaunchScreen.storyboard */; };
 		A714A0BD2CC6427000B6C123 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0BC2CC6427000B6C123 /* NewsModel.swift */; };
-		A714A0C52CC679D500B6C123 /* DetailNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0C42CC679D500B6C123 /* DetailNewsViewController.swift */; };
 		A714A0CE2CC7CF1100B6C123 /* NewsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0CD2CC7CF1100B6C123 /* NewsCategory.swift */; };
 		A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */; };
 		A714A0D32CC7D59D00B6C123 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */; };
@@ -53,7 +52,6 @@
 		A714A0AC2CC578CA00B6C123 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A714A0AE2CC578CA00B6C123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A714A0BC2CC6427000B6C123 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
-		A714A0C42CC679D500B6C123 /* DetailNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNewsViewController.swift; sourceTree = "<group>"; };
 		A714A0CD2CC7CF1100B6C123 /* NewsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCategory.swift; sourceTree = "<group>"; };
 		A714A0CF2CC7D34A00B6C123 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		A714A0D22CC7D59D00B6C123 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 				A714A0B42CC57B9200B6C123 /* App */,
 				A714A0BB2CC6424A00B6C123 /* Models */,
 				A714A0DF2CC830DE00B6C123 /* Network */,
-				A714A0C82CC6DC3B00B6C123 /* DetailScreen */,
 				A714A0B62CC57C7D00B6C123 /* MainScreen */,
 				A714A0D12CC7D34E00B6C123 /* TermsScreen */,
 				08F97D492CC68A4A003AAFC1 /* Extensions */,
@@ -164,14 +161,6 @@
 				A714A0CD2CC7CF1100B6C123 /* NewsCategory.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		A714A0C82CC6DC3B00B6C123 /* DetailScreen */ = {
-			isa = PBXGroup;
-			children = (
-				A714A0C42CC679D500B6C123 /* DetailNewsViewController.swift */,
-			);
-			path = DetailScreen;
 			sourceTree = "<group>";
 		};
 		A714A0D12CC7D34E00B6C123 /* TermsScreen */ = {
@@ -314,7 +303,6 @@
 				A714A0A12CC578C700B6C123 /* AppDelegate.swift in Sources */,
 				A714A0BD2CC6427000B6C123 /* NewsModel.swift in Sources */,
 				A7D7DB0A2CCA4A9200F0FCBE /* Constants.swift in Sources */,
-				A714A0C52CC679D500B6C123 /* DetailNewsViewController.swift in Sources */,
 				A714A0ED2CC8ED7C00B6C123 /* TopHeadlinesRequest.swift in Sources */,
 				A714A0FB2CC8F0E600B6C123 /* PersistenceManager.swift in Sources */,
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
