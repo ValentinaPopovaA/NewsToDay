@@ -1,5 +1,6 @@
 //
-//  LoginViewController.swift
+//  RegisterViewController.swift
+//
 //  NewsToDay
 //
 //  Created by Кирилл Бахаровский on 10/27/24.
@@ -7,20 +8,30 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class RegisterViewController: UIViewController {
 
     private lazy var titleLabel = UILabel.createLabel(
-        text: "Welcome Back 👋",
+        text: "Welcome to NewsToDay",
         fontSize: 24,
         textColor: .blackPrimary!,
         isBold: true,
         textAlignment: .left)
     
     private lazy var subTitle = UILabel.createLabel(
-        text: "I am happy to see you again. You can continue where you left off by logging in",
+        text: "Hello, I guess you are new around here. You can start using the application after sign up.",
         fontSize: 16,
         textColor: .grayPrimary!,
         textAlignment: .left)
+    
+    private lazy var usernameTF = UITextField.createTextField(
+        placeholder: "Username",
+        fontSize: 16,
+        textColor: .grayPrimary!,
+        cornerRadius: 12,
+        isSecureTextEntry: false,
+        leftIconName: "person",
+        leftIconColor: .grayPrimary!,
+        leftPadding: 24)
     
     private lazy var emailTF = UITextField.createTextField(
         placeholder: "Email Address",
@@ -42,9 +53,20 @@ class LoginViewController: UIViewController {
         leftIconColor: .grayPrimary!,
         leftPadding: 24,
         togglePassword: true)
+   
+    private lazy var passwordRepeatTF = UITextField.createTextField(
+        placeholder: "Password",
+        fontSize: 16,
+        textColor: .grayPrimary!,
+        cornerRadius: 12,
+        isSecureTextEntry: true,
+        leftIconName: "lock",
+        leftIconColor: .grayPrimary!,
+        leftPadding: 24,
+        togglePassword: true)
     
     private lazy var signUpLabel = UILabel.createLabel(
-        text: "Don't have an account?",
+        text: "Already have an account?",
         fontSize: 16,
         textColor: .blackLighter!,
         textAlignment: .center)
@@ -83,16 +105,14 @@ class LoginViewController: UIViewController {
     }
     
     @objc func signUpButtonTapped() {
-        let vc = RegisterViewController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        print("signUpButton")
     }
     
     
 }
 
 // MARK: - KeyBoard
-extension LoginViewController {
+extension RegisterViewController {
     func hideKeyboardWhenTappedAround() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -104,14 +124,14 @@ extension LoginViewController {
     }
 }
 
-extension LoginViewController {
+extension RegisterViewController {
     
     private func setupViews() {
         [signUpLabel, signUpButton].forEach { localView in
             signUpStackView.addArrangedSubview(localView)
         }
         
-        [titleLabel, subTitle, emailTF, passwordTF, loginButton, signUpStackView].forEach { localView in
+        [titleLabel, subTitle, usernameTF, emailTF, passwordTF, passwordRepeatTF, loginButton, signUpStackView].forEach { localView in
             localView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(localView)
         }
@@ -131,7 +151,14 @@ extension LoginViewController {
         ])
         
         NSLayoutConstraint.activate([
-            emailTF.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 32),
+            usernameTF.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 32),
+            usernameTF.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            usernameTF.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            usernameTF.heightAnchor.constraint(equalToConstant: 56)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emailTF.topAnchor.constraint(equalTo: usernameTF.bottomAnchor, constant: 16),
             emailTF.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             emailTF.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             emailTF.heightAnchor.constraint(equalToConstant: 56)
@@ -145,7 +172,14 @@ extension LoginViewController {
         ])
         
         NSLayoutConstraint.activate([
-            loginButton.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 64),
+            passwordRepeatTF.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 16),
+            passwordRepeatTF.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            passwordRepeatTF.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            passwordRepeatTF.heightAnchor.constraint(equalToConstant: 56)
+        ])
+        
+        NSLayoutConstraint.activate([
+            loginButton.topAnchor.constraint(equalTo: passwordRepeatTF.bottomAnchor, constant: 16),
             loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             loginButton.heightAnchor.constraint(equalToConstant: 56)
@@ -157,3 +191,4 @@ extension LoginViewController {
         ])
     }
 }
+
