@@ -9,7 +9,7 @@ import UIKit
 
 class FavoritesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let favoritesView = FavoritesView()
-    private let favoritesManager = FavoritesManager()
+//    private let favoritesManager = FavoritesManager()
 
     private var favorites: [News] = []
 
@@ -19,7 +19,6 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Bookmarks"
         view.backgroundColor = .white
         
         // Тест - удалить
@@ -52,7 +51,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     }
 
     private func loadFavorites() {
-        favorites = favoritesManager.getFavorites()
+//        favorites = favoritesManager.getFavorites()
         updateView()
     }
 
@@ -77,7 +76,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         let article = favorites[indexPath.row]
-        cell.configure(with: article)
+//        cell.configure(with: article)
         return cell
     }
 
@@ -85,7 +84,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let article = favorites[indexPath.row]
-            favoritesManager.removeFromFavorites(article)
+//            favoritesManager.removeFromFavorites(article)
             loadFavorites()
         }
     }

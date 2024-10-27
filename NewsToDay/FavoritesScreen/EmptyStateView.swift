@@ -9,6 +9,7 @@ import UIKit
 
 class EmptyStateView: UIView {
     
+    //MARK: - UI Components
     private let iconContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +33,7 @@ class EmptyStateView: UIView {
         textColor: .blackDark ?? .black
     )
     
+    // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

@@ -22,4 +22,3 @@ enum Categories {
     static let sports = "sports"
     static let technology = "technology"
 }
-
