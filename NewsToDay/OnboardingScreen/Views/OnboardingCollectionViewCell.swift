@@ -18,6 +18,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    
     private let topLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .black)
     private let bottomLabel = UILabel(font: .boldSystemFont(ofSize: 16), textColor: .gray)
     
