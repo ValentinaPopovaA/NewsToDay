@@ -18,7 +18,6 @@ class OnboardingViewController: UIViewController {
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
     
-    
     // MARK: Properties
     
     private lazy var nextButton: UIButton = {
@@ -34,8 +33,6 @@ class OnboardingViewController: UIViewController {
     }()
     
     private let pageControl = CustomPageControl()
-    
-    
     
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
