@@ -5,7 +5,7 @@
 //  Created by apple on 10/23/24.
 //
 
-import UIKit
+import UIKit 
 
 extension UILabel {
     convenience init(text: String) {
