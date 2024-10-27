@@ -14,6 +14,18 @@ class MainViewController: UIViewController {
         view.backgroundColor = .systemCyan
     }
 
-
+    override func viewDidAppear(_ animated: Bool) {
+        showOnboarding()
+    }
+    
+    private func showOnboarding() {
+        let userDefaults = UserDefaults.standard
+        let onBoardinngWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
+        if onBoardinngWasViewed == false {
+            let onboardingViewController = OnboardingViewController()
+            onboardingViewController.modalPresentationStyle = .fullScreen
+            present(onboardingViewController, animated: true)
+        }
+    }
 }
 

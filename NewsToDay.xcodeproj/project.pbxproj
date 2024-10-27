@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -80,6 +80,10 @@
 		FCF32CEE2CCD19F500828852 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		188D8E7D2CC9F72D004FF616 /* OnboardingScreen */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingScreen; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		A714A09A2CC578C700B6C123 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -94,6 +98,7 @@
 		08F97D492CC68A4A003AAFC1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				188D8E892CC9FAB7004FF616 /* UILAbel + Extancion.swift */,
 				08F97D4C2CC68D40003AAFC1 /* UIColor+Extension.swift */,
 				08F97D502CC6B253003AAFC1 /* UIFont+Extension.swift */,
 				08F97D522CC6B5FC003AAFC1 /* UIButton+Extansion.swift */,
@@ -121,6 +126,7 @@
 		A714A09F2CC578C700B6C123 /* NewsToDay */ = {
 			isa = PBXGroup;
 			children = (
+				188D8E7D2CC9F72D004FF616 /* OnboardingScreen */,
 				A714A0B42CC57B9200B6C123 /* App */,
 				A714A0BB2CC6424A00B6C123 /* Models */,
 				A714A0DF2CC830DE00B6C123 /* Network */,
@@ -266,6 +272,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				188D8E7D2CC9F72D004FF616 /* OnboardingScreen */,
 			);
 			name = NewsToDay;
 			productName = NewsToDay;
