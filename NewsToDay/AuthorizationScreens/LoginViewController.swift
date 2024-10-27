@@ -8,7 +8,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    
     private lazy var titleLabel = UILabel.createLabel(
         text: "Welcome Back 👋",
         fontSize: 24,
@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
         cornerRadius: 12,
         isSecureTextEntry: false,
         leftIconName: "envelope",
-        leftIconColor: .grayPrimary!,
+        IconColor: .grayPrimary!,
         leftPadding: 24)
     
     private lazy var passwordTF = UITextField.createTextField(
@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         cornerRadius: 12,
         isSecureTextEntry: true,
         leftIconName: "lock",
-        leftIconColor: .grayPrimary!,
+        IconColor: .grayPrimary!,
         leftPadding: 24,
         togglePassword: true)
     
@@ -70,14 +70,14 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         setupViews()
         setConstraints()
         hideKeyboardWhenTappedAround()
     }
-
-
+    
+    
     @objc func loginButtonTapped() {
         print("loginButtonTapped")
     }
@@ -90,7 +90,6 @@ class LoginViewController: UIViewController {
     
     
 }
-
 // MARK: - KeyBoard
 extension LoginViewController {
     func hideKeyboardWhenTappedAround() {
@@ -98,7 +97,7 @@ extension LoginViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
-
+    
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -114,6 +113,33 @@ extension LoginViewController {
         [titleLabel, subTitle, emailTF, passwordTF, loginButton, signUpStackView].forEach { localView in
             localView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(localView)
+        }
+        
+        [emailTF, passwordTF].forEach { textField in
+            textField.addTarget(self, action: #selector(changeTextFieldBackground), for: .allEditingEvents)
+        }
+    }
+    
+    @objc private func changeTextFieldBackground(sender: UITextField) {
+        sender.backgroundColor = .white
+        sender.textColor = .black
+        
+        let borderLayer = CALayer()
+        borderLayer.frame = sender.bounds
+        borderLayer.borderColor = UIColor.purplePrimary?.cgColor
+        borderLayer.borderWidth = 1.0
+        borderLayer.cornerRadius = 12
+        borderLayer.masksToBounds = true
+        sender.rightView?.subviews.first?.tintColor = .white
+        
+        sender.layer.insertSublayer(borderLayer, at: 0)
+        sender.leftView?.subviews.first?.tintColor = .purplePrimary
+        
+        guard let textCount = sender.text?.count else { return }
+        if textCount >= 1 {
+            sender.rightView?.subviews.first?.tintColor = .purplePrimary
+        } else {
+            
         }
     }
     

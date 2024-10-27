@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import ObjectiveC
+
+private var anotherColorKey: UInt8 = 0
 
 extension UITextField {
+    
     static func createTextField(placeholder: String,
                                 fontSize: CGFloat,
                                 textColor: UIColor,
@@ -19,7 +23,7 @@ extension UITextField {
                                 backgroundColor: CGColor? = UIColor.grayLighter!.cgColor,
                                 isSecureTextEntry: Bool,
                                 leftIconName: String? = nil,
-                                leftIconColor: UIColor? = UIColor.grayPrimary!,
+                                IconColor: UIColor? = UIColor.grayPrimary!,
                                 topPadding: CGFloat = 16,
                                 leftPadding: CGFloat = 16,
                                 bottomPadding: CGFloat = 16,
@@ -37,10 +41,11 @@ extension UITextField {
         textField.layer.cornerRadius = cornerRadius
         textField.layer.backgroundColor = backgroundColor
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocorrectionType = .no
         
         if let iconName = leftIconName, let icon = UIImage(systemName: iconName) {
             let iconView = UIImageView(image: icon)
-            iconView.tintColor = leftIconColor
+            iconView.tintColor = IconColor
             iconView.contentMode = .center
             
             // Контейнер с кастомными отступами
@@ -66,7 +71,7 @@ extension UITextField {
         if togglePassword {
             let toggleButton = UIButton()
             toggleButton.setImage(UIImage(systemName: "eye"), for: .normal)
-            toggleButton.tintColor = .gray
+            toggleButton.tintColor = .grayLighter!
             toggleButton.addTarget(textField, action: #selector(textField.togglePasswordVisibility), for: .touchUpInside)
             
             textField.rightView = toggleButton
@@ -91,7 +96,6 @@ extension UITextField {
             textField.rightView = paddingView
             textField.rightViewMode = .always
         }
-        
         return textField
     }
     
@@ -100,4 +104,6 @@ extension UITextField {
         let eyeIconName = isSecureTextEntry ? "eye" : "eye.slash"
         (rightView?.subviews.first as? UIButton)?.setImage(UIImage(systemName: eyeIconName), for: .normal)
     }
+    
 }
+

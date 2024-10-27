@@ -9,7 +9,7 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
-
+    
     private lazy var titleLabel = UILabel.createLabel(
         text: "Welcome to NewsToDay",
         fontSize: 24,
@@ -30,7 +30,7 @@ class RegisterViewController: UIViewController {
         cornerRadius: 12,
         isSecureTextEntry: false,
         leftIconName: "person",
-        leftIconColor: .grayPrimary!,
+        IconColor: .grayPrimary!,
         leftPadding: 24)
     
     private lazy var emailTF = UITextField.createTextField(
@@ -40,7 +40,7 @@ class RegisterViewController: UIViewController {
         cornerRadius: 12,
         isSecureTextEntry: false,
         leftIconName: "envelope",
-        leftIconColor: .grayPrimary!,
+        IconColor: .grayPrimary!,
         leftPadding: 24)
     
     private lazy var passwordTF = UITextField.createTextField(
@@ -50,10 +50,10 @@ class RegisterViewController: UIViewController {
         cornerRadius: 12,
         isSecureTextEntry: true,
         leftIconName: "lock",
-        leftIconColor: .grayPrimary!,
+        IconColor: .grayPrimary!,
         leftPadding: 24,
         togglePassword: true)
-   
+    
     private lazy var passwordRepeatTF = UITextField.createTextField(
         placeholder: "Password",
         fontSize: 16,
@@ -61,7 +61,7 @@ class RegisterViewController: UIViewController {
         cornerRadius: 12,
         isSecureTextEntry: true,
         leftIconName: "lock",
-        leftIconColor: .grayPrimary!,
+        IconColor: .grayPrimary!,
         leftPadding: 24,
         togglePassword: true)
     
@@ -73,10 +73,10 @@ class RegisterViewController: UIViewController {
     
     private lazy var signUpButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Sign Up", for: .normal)
+        button.setTitle("Sign In", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         button.setTitleColor(.blackPrimary!, for: .normal)
-        button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -92,20 +92,22 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         setupViews()
         setConstraints()
         hideKeyboardWhenTappedAround()
     }
-
-
+    
+    
     @objc func loginButtonTapped() {
         print("loginButtonTapped")
     }
     
-    @objc func signUpButtonTapped() {
-        print("signUpButton")
+    @objc func signInButtonTapped() {
+        let vc = LoginViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     
@@ -118,7 +120,7 @@ extension RegisterViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
-
+    
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -129,11 +131,39 @@ extension RegisterViewController {
     private func setupViews() {
         [signUpLabel, signUpButton].forEach { localView in
             signUpStackView.addArrangedSubview(localView)
+            
         }
         
         [titleLabel, subTitle, usernameTF, emailTF, passwordTF, passwordRepeatTF, loginButton, signUpStackView].forEach { localView in
             localView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(localView)
+        }
+        
+        [usernameTF, emailTF, passwordTF, passwordRepeatTF].forEach { textField in
+            textField.addTarget(self, action: #selector(changeTextFieldBackground), for: .allEditingEvents)
+        }
+    }
+    
+    @objc private func changeTextFieldBackground(sender: UITextField) {
+        sender.backgroundColor = .white
+        sender.textColor = .black
+        
+        let borderLayer = CALayer()
+        borderLayer.frame = sender.bounds
+        borderLayer.borderColor = UIColor.purplePrimary?.cgColor
+        borderLayer.borderWidth = 1.0
+        borderLayer.cornerRadius = 12
+        borderLayer.masksToBounds = true
+        sender.rightView?.subviews.first?.tintColor = .white
+        
+        sender.layer.insertSublayer(borderLayer, at: 0)
+        sender.leftView?.subviews.first?.tintColor = .purplePrimary
+        
+        guard let textCount = sender.text?.count else { return }
+        if textCount >= 1 {
+            sender.rightView?.subviews.first?.tintColor = .purplePrimary
+        } else {
+            
         }
     }
     
