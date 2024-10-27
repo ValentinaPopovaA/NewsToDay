@@ -10,21 +10,19 @@ import UIKit
 class OnboardingCollectionViewCell: UICollectionViewCell {
     
     private let backgroundImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
         return imageView
     }()
-
-    private let topLabel = UILabel(font: .boldSystemFont(ofSize: 24) , textColor: .blackDark! )
-
+    
+    private let topLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .black)
     private let bottomLabel = UILabel(font: .boldSystemFont(ofSize: 16), textColor: .gray)
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupViews()
         setConstraints()
     }
@@ -34,38 +32,39 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        self.backgroundColor = .grayLighter
         addSubview(backgroundImageView)
         topLabel.textAlignment = .center
         addSubview(topLabel)
         bottomLabel.textAlignment = .center
         bottomLabel.numberOfLines = 4
         addSubview(bottomLabel)
+
     }
     
-    public func cellConfigure(model: OnboardingStruct) {
+    public func cellConfigure(model: OnboardingStruct, totalPages: Int, currentPage: Int) {
         topLabel.text = model.topLabel
         bottomLabel.text = model.bottomLabel
         backgroundImageView.image = model.image
+        
     }
     
     private func setConstraints() {
-      
         NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            backgroundImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
             
-            backgroundImageView.topAnchor.constraint(equalTo: topAnchor, constant: 120),
-            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60),
-            backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
-            backgroundImageView.heightAnchor.constraint(equalToConstant: 400),
- 
-            topLabel.bottomAnchor.constraint(equalTo: bottomLabel.topAnchor, constant: -5),
-            topLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            topLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-
-            bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            bottomLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 80),
-            bottomLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -80),
-            bottomLabel.heightAnchor.constraint(equalToConstant: 85)
+            topLabel.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 40),
+            topLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 16),
+            bottomLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            bottomLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
+            bottomLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
+            bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            
         ])
     }
 }
+
