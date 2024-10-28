@@ -35,7 +35,7 @@ final class TabBarController: UITabBarController {
         
         let browseViewController = UIViewController()
         browseViewController.view.backgroundColor = .cyan
-        let categoriesViewController = UIViewController()
+        let categoriesViewController = CategoriesViewController()
         let bookmarksViewController = FavoritesViewController()
         let profileViewController = ProfileViewController()
         

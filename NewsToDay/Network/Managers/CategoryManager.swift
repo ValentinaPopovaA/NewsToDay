@@ -17,19 +17,19 @@ class CategoryManager: CategoryManagerProtocol {
     
     var all: [Category] = [
         Category(name: Categories.general,
-                 icon: "⚖️"),
+                 icon: "⚖️ "),
         Category(name: Categories.business,
-                 icon: "📈"),
+                 icon: "📈 "),
         Category(name: Categories.entertainment,
-                 icon: "🎥"),
+                 icon: "🎥 "),
         Category(name: Categories.health,
-                 icon: "🥑"),
+                 icon: "🥑 "),
         Category(name: Categories.science,
-                 icon: "🧬"),
+                 icon: "🧬 "),
         Category(name: Categories.technology,
-                 icon: "📱"),
+                 icon: "📱 "),
         Category(name: Categories.sports,
-                 icon: "🏈"),
+                 icon: "🏈 "),
     ]
     
     var selectedCellIndex: [Int] = [0, 1, 2, 3, 4, 5, 6]

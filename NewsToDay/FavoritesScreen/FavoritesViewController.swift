@@ -8,9 +8,8 @@
 import UIKit
 
 class FavoritesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     private let favoritesView = FavoritesView()
-//    private let favoritesManager = FavoritesManager()
-
     private var favorites: [News] = []
 
     override func loadView() {
@@ -20,38 +19,26 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        // Тест - удалить
-        if favoritesManager.getFavorites().isEmpty {
-            let mockArticles = createMockArticles()
-            for article in mockArticles {
-                favoritesManager.addToFavorites(article)
-            }
-        }
-
         setupTableView()
-        loadFavorites()
+        updateView()
+        loadMockFavorites()
     }
     
-    // Тестовый метод - удалить
-    func createMockArticles() -> [News] {
-        return [
-            News(title: "A Simple Trick For Creating Color Palettes Quickly", description: "Learn how to create color palettes", author: "UI/UX Design", urlToImage: "https://example.com/image1.jpg", publishedAt: "2024-10-22", category: "Design"),
-            News(title: "Six steps to creating a color palette", description: "Master the steps to make your own palette", author: "Art", urlToImage: "https://example.com/image2.jpg", publishedAt: "2024-10-22", category: "Art"),
-//            Article(title: "Creating Color Palette from world around you", description: "Get inspired by nature", author: "Colors", urlToImage: "https://example.com/image3.jpg", publishedAt: "2024-10-22", category: "Colors")
-        ]
-    }
-
     private func setupTableView() {
         favoritesView.tableView.dataSource = self
         favoritesView.tableView.delegate = self
-        favoritesView.tableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: "BookmarkCell")
+        favoritesView.tableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: FavoritesTableViewCell.reuseID)
         favoritesView.tableView.rowHeight = UITableView.automaticDimension
         favoritesView.tableView.estimatedRowHeight = 150
     }
 
-    private func loadFavorites() {
-//        favorites = favoritesManager.getFavorites()
+    private func loadMockFavorites() {
+        // Моковые данные
+        favorites = [
+            News(source: Source(id: "1", name: "UI/UX Design"), author: "John Doe", title: "A Simple Trick For Creating Color Palettes Quickly", description: "Learn how to create color palettes", url: "https://example.com/article1", urlToImage: "https://ionicframework.com/docs/img/demos/thumbnail.svg", publishedAt: "2024-10-22", content: "Content of article 1"),
+            News(source: Source(id: "2", name: "Art"), author: "Jane Doe", title: "Six Steps to Creating a Color Palette", description: "Master the steps to make your own palette", url: "https://example.com/article2", urlToImage: "https://ionicframework.com/docs/img/demos/thumbnail.svg", publishedAt: "2024-10-21", content: "Content of article 2")
+        ]
+
         updateView()
     }
 
@@ -71,28 +58,28 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkCell", for: indexPath) as? FavoritesTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.reuseID, for: indexPath) as? FavoritesTableViewCell else {
             return UITableViewCell()
         }
         
-        let article = favorites[indexPath.row]
-//        cell.configure(with: article)
+        let newsItem = favorites[indexPath.row]
+        cell.setupCell(news: newsItem)
         return cell
-    }
-
-    // Удаление статьи из избранного
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let article = favorites[indexPath.row]
-//            favoritesManager.removeFromFavorites(article)
-            loadFavorites()
-        }
     }
 
     // MARK: - UITableViewDelegate
 
+    // Установка отступов вокруг ячейки
+    func tableView(_ tableView: UITableView, layoutMarginsForRowAt indexPath: IndexPath) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+    }
+
+    // Высота ячейки с учетом отступов
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 115
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Логика для открытия статьи или других действий
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
