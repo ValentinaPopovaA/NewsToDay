@@ -12,6 +12,7 @@
 		080CFAD22CCFF7F00055B8B0 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080CFAD12CCFF7F00055B8B0 /* CategoryCell.swift */; };
 		080CFAD42CCFFA5D0055B8B0 /* NewsPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080CFAD32CCFFA5D0055B8B0 /* NewsPreviewCell.swift */; };
 		080CFAD82CD0FE960055B8B0 /* RecommendenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080CFAD72CD0FE960055B8B0 /* RecommendenCell.swift */; };
+		080CFADB2CD120280055B8B0 /* RecommendedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080CFADA2CD120280055B8B0 /* RecommendedHeader.swift */; };
 		08CC16582CCE3EEB00FB0C40 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CC16572CCE3EEB00FB0C40 /* ListItem.swift */; };
 		08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F97D4C2CC68D40003AAFC1 /* UIColor+Extension.swift */; };
 		08F97D4F2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08F97D4E2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf */; };
@@ -35,6 +36,7 @@
 		080CFAD12CCFF7F00055B8B0 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		080CFAD32CCFFA5D0055B8B0 /* NewsPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsPreviewCell.swift; sourceTree = "<group>"; };
 		080CFAD72CD0FE960055B8B0 /* RecommendenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendenCell.swift; sourceTree = "<group>"; };
+		080CFADA2CD120280055B8B0 /* RecommendedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedHeader.swift; sourceTree = "<group>"; };
 		08CC16572CCE3EEB00FB0C40 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		08F97D4C2CC68D40003AAFC1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		08F97D4E2CC6B033003AAFC1 /* Inter-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
@@ -65,6 +67,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		080CFADC2CD123160055B8B0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				08CC16572CCE3EEB00FB0C40 /* ListItem.swift */,
+				080CFACF2CCFD3220055B8B0 /* ListSection.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		08CC16562CCE3EDA00FB0C40 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +100,7 @@
 		08F97D5B2CCAAC15003AAFC1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				080CFADA2CD120280055B8B0 /* RecommendedHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -146,8 +158,7 @@
 		A714A0B62CC57C7D00B6C123 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				08CC16572CCE3EEB00FB0C40 /* ListItem.swift */,
-				080CFACF2CCFD3220055B8B0 /* ListSection.swift */,
+				080CFADC2CD123160055B8B0 /* Models */,
 				080CFAC32CCE444C0055B8B0 /* MockData.swift */,
 				A714A0A42CC578C700B6C123 /* MainViewController.swift */,
 				08CC16562CCE3EDA00FB0C40 /* Cells */,
@@ -244,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				080CFADB2CD120280055B8B0 /* RecommendedHeader.swift in Sources */,
 				08CC16582CCE3EEB00FB0C40 /* ListItem.swift in Sources */,
 				080CFAD82CD0FE960055B8B0 /* RecommendenCell.swift in Sources */,
 				A714A0A52CC578C700B6C123 /* MainViewController.swift in Sources */,

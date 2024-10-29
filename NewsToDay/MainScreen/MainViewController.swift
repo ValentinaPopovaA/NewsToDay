@@ -12,8 +12,7 @@ class MainViewController: UIViewController {
     private let collectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = .orange
-        collectionView.bounces = false
+        collectionView.bounces = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -22,7 +21,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .cyan
+        view.backgroundColor = .white
         setupViews()
         setConstraints()
         setDelegates()
@@ -33,7 +32,8 @@ class MainViewController: UIViewController {
         view.addSubview(collectionView)
         collectionView.register(NewsPreviewCell.self, forCellWithReuseIdentifier: NewsPreviewCell.identifier)
         collectionView.register(RecommendenCell.self, forCellWithReuseIdentifier: RecommendenCell.identifier)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellid")
+        collectionView.register(RecommendedHeader.self,forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RecommendedHeader.identifier)
+        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.identifier)
         collectionView.collectionViewLayout = createLayout()
     }
     
@@ -67,12 +67,13 @@ extension MainViewController {
     private func createLayoutSection(group: NSCollectionLayoutGroup,
                                      behaviior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
                                      interGroupSpacing: CGFloat,
-                                     suplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem]) -> NSCollectionLayoutSection {
+                                     suplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem],
+                                     contentInsets: Bool   ) -> NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = behaviior
         section.interGroupSpacing = interGroupSpacing
         section.boundarySupplementaryItems = suplementaryItems
-        
+        section.supplementariesFollowContentInsets = contentInsets
         return section
     }
     
@@ -87,8 +88,9 @@ extension MainViewController {
         let section = createLayoutSection(group: group,
                                           behaviior: .groupPaging,
                                           interGroupSpacing: 16,
-                                          suplementaryItems: [])
-        section.contentInsets = .init(top: 24, leading: 20, bottom: 0, trailing: 20)
+                                          suplementaryItems: [],
+                                          contentInsets: false)
+        section.contentInsets = .init(top: 24, leading: 20, bottom: 48, trailing: 20)
         
         return section
     }
@@ -104,7 +106,8 @@ extension MainViewController {
         let section = createLayoutSection(group: group,
                                           behaviior: .continuous,
                                           interGroupSpacing: 16,
-                                          suplementaryItems: [])
+                                          suplementaryItems: [],
+                                          contentInsets: false)
         section.contentInsets = .init(top: 24, leading: 20, bottom: 0, trailing: 20)
         
         return section
@@ -114,16 +117,25 @@ extension MainViewController {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                             heightDimension: .fractionalHeight(1)))
         
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                       heightDimension: .fractionalHeight(0.3)),
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .absolute(self.view.frame.width - 40),
+                                                                       heightDimension: .absolute(96)),
                                                      subitems: [item])
         
         let section = createLayoutSection(group: group,
                                           behaviior: .none,
                                           interGroupSpacing: 16,
-                                          suplementaryItems: [])
+                                          suplementaryItems: [createReccomendedSuplemetaryHeaderItem()],
+                                          contentInsets: false)
+        section.contentInsets = .init(top: 24, leading: 20, bottom: 0, trailing: 0)
         
         return section
+    }
+    
+    private func createReccomendedSuplemetaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+        .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                heightDimension: .absolute(24)),
+              elementKind: UICollectionView.elementKindSectionHeader,
+              alignment: .top)
     }
 }
 
@@ -148,8 +160,8 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch sections[indexPath.section] {
         case .category(let category):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellid", for: indexPath)
-            cell.backgroundColor = .red
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as? CategoryCell else { return UICollectionViewCell() }
+            cell.configureCell(categoryName: category[indexPath.item].title)
             return cell
         case .newsPreview(let newsPreview):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsPreviewCell.identifier, for: indexPath) as? NewsPreviewCell else { return UICollectionViewCell() }
@@ -159,6 +171,19 @@ extension MainViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendenCell.identifier, for: indexPath) as? RecommendenCell else { return UICollectionViewCell() }
             cell.configure(item: recommended[indexPath.item])
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                               withReuseIdentifier: RecommendedHeader.identifier,
+                                                                               for: indexPath) as? RecommendedHeader else { return UICollectionReusableView() }
+            header.configureHeader(categoryName: sections[indexPath.section].title)
+            return header
+        default:
+            return UICollectionReusableView()
         }
     }
     

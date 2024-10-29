@@ -17,7 +17,7 @@ class RecommendenCell: UICollectionViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = .boldSystemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 14)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -34,7 +34,6 @@ class RecommendenCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
         addViews()
         
     }
