@@ -12,6 +12,7 @@ final class CategoriesViewController: UIViewController {
     // MARK: - Properties
     private let categoryManager = CategoryManager()
     private var collectionView: UICollectionView!
+    private var selectedCategories: [Category] = []
     
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -34,6 +35,7 @@ final class CategoriesViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
         setupConstraints()
     }
@@ -52,6 +54,7 @@ final class CategoriesViewController: UIViewController {
         layout.minimumInteritemSpacing = 16
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.allowsMultipleSelection = true
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.id)
@@ -91,6 +94,7 @@ extension CategoriesViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.id, for: indexPath) as! CategoryCollectionViewCell
         let category = categoryManager.all[indexPath.row]
         cell.configure(with: category)
+        cell.isSelected = selectedCategories.contains(category)
         return cell
     }
 }
@@ -99,8 +103,19 @@ extension CategoriesViewController: UICollectionViewDataSource {
 extension CategoriesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCategory = categoryManager.all[indexPath.row]
-        let resultViewController = UIViewController() // Заглушка для перехода на другой экран
-        resultViewController.title = selectedCategory.name
-        navigationController?.pushViewController(resultViewController, animated: true)
+        
+        // Добавляем выбранную категорию, если её ещё нет в массиве
+        if !selectedCategories.contains(selectedCategory) {
+            selectedCategories.append(selectedCategory)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let deselectedCategory = categoryManager.all[indexPath.row]
+        
+        // Убираем категорию из массива, если она была выбрана
+        if let index = selectedCategories.firstIndex(of: deselectedCategory) {
+            selectedCategories.remove(at: index)
+        }
     }
 }
