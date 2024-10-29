@@ -9,7 +9,7 @@ import UIKit
 
 class NewsDetailViewController: UIViewController {
     
-    
+    var news: News?
     let navigationBarComponent = HeaderView() // Вью с иконкой для возвращения назад, создание закладки и иконкой для шеринга.
     
     private lazy var imageView: UIImageView = {
@@ -50,6 +50,7 @@ class NewsDetailViewController: UIViewController {
     }
     
     private func configure() {
+        guard let news = news else { return }
         navigationBarComponent.configure(
             backBtn: #selector(backBtnTapped),
             bookMarkIconBtn: #selector(bookMarkIconBtnTapped),
@@ -58,21 +59,28 @@ class NewsDetailViewController: UIViewController {
         )
         
         titleComponent.configure(
-            tagTitle: "Politics",
+            tagTitle: news.source.name ?? "",
             tagSelector: #selector(tagBtnTapped),
-            titleLabel: "The latest situation in the presidential election",
-            writerNameLabel: "John Doe",
+            titleLabel: news.title ?? "",
+            writerNameLabel: news.author ?? "",
             target: self
         )
         
         titleWithDescriptionView.configure(
-            titleLabel: "Results",
-            descriptionLabel: "Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. \n  For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. \n  Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters."
+            titleLabel: news.title ?? "",
+            descriptionLabel: news.description ?? ""
         )
+        
+        if let imageUrl = news.urlToImage {
+            ImageClient.shared.setImage(from: imageUrl, placeholderImage: UIImage(named: "placeholder")) { [weak self] image in
+                self?.imageView.image = image
+            }
+        }
+        
     }
     
     @objc func backBtnTapped() {
-        print("backBtnTapped")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func bookMarkIconBtnTapped() {

@@ -27,6 +27,7 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
         view.backgroundColor = .white
         setupViews()
         setDelegates()
@@ -186,5 +187,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedNews: News
+        switch sections[indexPath.section] {
+        case .news:
+            selectedNews = (newsData?[indexPath.row])!
+        case .recommended:
+            selectedNews = (recNewsData?[indexPath.row])!
+        default:
+            return
+        }
+        
+        let detailVC = NewsDetailViewController()
+        detailVC.news = selectedNews
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
