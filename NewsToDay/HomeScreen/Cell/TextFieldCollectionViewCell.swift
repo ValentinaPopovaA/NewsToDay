@@ -25,6 +25,21 @@ final class TextFieldCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var mainView: UIView = {
+        let element = UIView()
+        element.backgroundColor = .grayLighter
+        element.layer.cornerRadius = 12
+        element.layer.masksToBounds = true
+        return element
+    }()
+    
+    private lazy var searchButton: UIButton = {
+        let element = UIButton(type: .system)
+        element.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        element.tintColor = .grayPrimary
+        return element
+    }()
+    
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Search"
@@ -40,12 +55,16 @@ final class TextFieldCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(descriptionNewsLabel)
-        contentView.addSubview(searchTextField)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(mainView)
+        mainView.addSubview(searchButton)
+        mainView.addSubview(searchTextField)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionNewsLabel.translatesAutoresizingMaskIntoConstraints = false
+        mainView.translatesAutoresizingMaskIntoConstraints = false
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        searchButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 28),
@@ -56,10 +75,18 @@ final class TextFieldCollectionViewCell: UICollectionViewCell {
             descriptionNewsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             descriptionNewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            searchTextField.topAnchor.constraint(equalTo: descriptionNewsLabel.bottomAnchor, constant: 32),
-            searchTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            searchTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            searchTextField.heightAnchor.constraint(equalToConstant: 56)
+            mainView.topAnchor.constraint(equalTo: descriptionNewsLabel.bottomAnchor, constant: 32),
+            mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            mainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            mainView.heightAnchor.constraint(equalToConstant: 56),
+            
+            searchTextField.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
+            searchTextField.leadingAnchor.constraint(equalTo: searchButton.leadingAnchor, constant: 25),
+           
+            searchButton.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
+            searchButton.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16),
+            searchButton.widthAnchor.constraint(equalToConstant: 24),
+            searchButton.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
     

@@ -14,7 +14,7 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         label.layer.cornerRadius = 16
         label.layer.masksToBounds = true
         label.textAlignment = .center
-        label.font = .interRegular
+        label.font = .systemFont(ofSize: 12)
         label.textColor = .grayPrimary
         return label
     }()
@@ -56,7 +56,7 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
             categoryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             categoryLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             categoryLabel.heightAnchor.constraint(equalToConstant: 32),
-            categoryLabel.widthAnchor.constraint(equalToConstant: 100)
+            categoryLabel.widthAnchor.constraint(equalToConstant: 120)
         ])
     }
     
