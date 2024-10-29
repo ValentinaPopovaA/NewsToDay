@@ -4,13 +4,13 @@ struct MockData {
     static let shared = MockData()
     
     private let category: ListSection = {
-        .category([.init(title: "Random", subtitle: "", image: ""),
-                   .init(title: "Sports", subtitle: "", image: ""),
-                   .init(title: "Gaming", subtitle: "", image: ""),
-                   .init(title: "Politics", subtitle: "", image: ""),
-                   .init(title: "Life", subtitle: "", image: ""),
-                   .init(title: "Science", subtitle: "", image: ""),
-                   .init(title: "Animals", subtitle: "", image: "")
+        .category([.init(title: "RANDOM", subtitle: "", image: ""),
+                   .init(title: "SPORTS", subtitle: "", image: ""),
+                   .init(title: "GAMING", subtitle: "", image: ""),
+                   .init(title: "POLITICS", subtitle: "", image: ""),
+                   .init(title: "LIFE", subtitle: "", image: ""),
+                   .init(title: "SCIENCE", subtitle: "", image: ""),
+                   .init(title: "ANIMALS", subtitle: "", image: "")
         ])
     }()
     

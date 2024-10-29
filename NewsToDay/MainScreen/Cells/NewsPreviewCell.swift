@@ -7,13 +7,23 @@ class NewsPreviewCell: UICollectionViewCell {
     let label = UILabel()
     let subLabel = UILabel()
     let imageView = UIImageView()
-    let bookmarkButton = UIButton()
+   // let bookmarkButton = UIButton()
+    
+    private lazy var  bookmarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.setBackgroundImage(UIImage(named: "bookmarks"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        //button.addTarget(self, action: #selector("closeButtonTapped"), for: .touchUpInside)
+        return button
+    }()
     
     override init (frame: CGRect) {
         super.init(frame: frame)
         self.layer.cornerRadius = 12
         self.clipsToBounds = true
         setupElements()
+        setupConstraints()
         
     }
     
@@ -29,7 +39,7 @@ class NewsPreviewCell: UICollectionViewCell {
         
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         
         label.numberOfLines = 0
         subLabel.numberOfLines = 0
@@ -43,7 +53,11 @@ class NewsPreviewCell: UICollectionViewCell {
     
     func configure(item: ListItem) {
         label.text = item.title
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 24)
         subLabel.text = item.subtitle
+        subLabel.textColor = .white
+        subLabel.font = .boldSystemFont(ofSize: 18)
         imageView.image = UIImage(named: item.image)
     }
     
@@ -59,7 +73,7 @@ extension NewsPreviewCell {
             imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             bookmarkButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 24),
-            bookmarkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 24),
+            bookmarkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -24),
             bookmarkButton.widthAnchor.constraint(equalToConstant: 24),
             bookmarkButton.heightAnchor.constraint(equalToConstant: 24),
             
