@@ -33,8 +33,7 @@ final class TabBarController: UITabBarController {
         tabBar.layer.cornerRadius = 12
         tabBar.layer.masksToBounds = true
         
-        let browseViewController = UIViewController()
-        browseViewController.view.backgroundColor = .cyan
+        let browseViewController = HomeViewController()
         let categoriesViewController = CategoriesViewController()
         let bookmarksViewController = FavoritesViewController()
         let profileViewController = ProfileViewController()

@@ -7,21 +7,41 @@
 
 import UIKit
 
-final class CategoriesCollectionViewCell: UICollectionViewCell {
+final class CategoryCollectionViewCell: UICollectionViewCell {
     
     static let id = "CategoryCell"
     
     // MARK: - UI Elements
     var titleLabel = UILabel()
     
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                backgroundColor = .purplePrimary
+                titleLabel.textColor = .white
+                
+            } else {
+                backgroundColor = .grayLighter
+                titleLabel.textColor = .grayDark
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
+        setupUICell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupUICell() {
+        backgroundColor = .grayLighter
+        layer.masksToBounds = false
+        layer.cornerRadius = 15
     }
     
     func configure(with category: Category) {

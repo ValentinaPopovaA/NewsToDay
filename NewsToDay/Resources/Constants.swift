@@ -14,11 +14,11 @@ enum Keys {
 }
 
 enum Categories {
-    static let business = "business"
-    static let entertainment = "entertainment"
-    static let general = "general"
-    static let health = "health"
-    static let science = "science"
-    static let sports = "sports"
-    static let technology = "technology"
+    static let business = "Business"
+    static let entertainment = "Entertainment"
+    static let general = "General"
+    static let health = "Health"
+    static let science = "Science"
+    static let sports = "Sports"
+    static let technology = "Technology"
 }
