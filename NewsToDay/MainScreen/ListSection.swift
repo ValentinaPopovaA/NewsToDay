@@ -3,6 +3,7 @@ import Foundation
 enum ListSection {
     case category([ListItem])
     case newsPreview([ListItem])
+    case recommended([ListItem])
     
     
     var items: [ListItem] {
@@ -10,6 +11,8 @@ enum ListSection {
         case .category(let items):
             return items
         case .newsPreview(let items):
+            return items
+        case .recommended(let items):
             return items
         }
     }
@@ -24,6 +27,8 @@ enum ListSection {
             return ""
         case .newsPreview(_):
             return ""
+        case .recommended(_):
+            return "Recommended for you"
         }
     }
 }

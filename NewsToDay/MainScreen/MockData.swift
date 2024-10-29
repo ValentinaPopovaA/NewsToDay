@@ -22,7 +22,13 @@ struct MockData {
         ])
     }()
     
+    private let recommended: ListSection = {
+        .recommended([.init(title: "UI/UX", subtitle: "This is test SubTitle", image: "moscow"),
+                      .init(title: "Science", subtitle: "A Simple Trick For Creating Color Palettes Quickly", image: "new-york")
+        ])
+    }()
+    
     var pageData: [ListSection] {
-        [category, newsPreview]
+        [category, newsPreview, recommended]
     }
 }
