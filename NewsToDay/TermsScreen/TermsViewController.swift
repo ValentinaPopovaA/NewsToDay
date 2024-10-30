@@ -9,6 +9,23 @@ import UIKit
 
 class TermsViewController: UIViewController {
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Terms & Conditions"
+        label.font = .interBold
+        label.textColor = .blackPrimary
+        return label
+    }()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+        button.tintColor = .grayPrimary
+        return button
+    }()
+    
     private lazy var termsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
@@ -28,13 +45,25 @@ class TermsViewController: UIViewController {
     
     private func setupLayout() {
         view.addSubview(termsTextView)
+        view.addSubview(titleLabel)
+        view.addSubview(backButton)
         
         NSLayoutConstraint.activate([
-            termsTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            backButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            backButton.heightAnchor.constraint(equalToConstant: 44),
+            backButton.widthAnchor.constraint(equalToConstant: 44),
+            
+            termsTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             termsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             termsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             termsTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
+        
+        backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
     }
     
     private func getTermsAndConditionsText() -> NSAttributedString {
@@ -47,7 +76,7 @@ class TermsViewController: UIViewController {
         Welcome to our News To Day App. Please read these terms and conditions carefully before using our service.\n\n
         """, attributes: introAttributes)
         attributedText.append(introText)
-
+        
         
         let sections: [(String, String)] = [
             ("1. Acceptance of Terms", "By accessing or using the News App, you agree to be bound by these Terms & Conditions. If you do not agree to any part of these terms, please do not use our service."),
@@ -77,5 +106,9 @@ class TermsViewController: UIViewController {
         }
         
         return attributedText
+    }
+    
+    @objc private func didTapBackButton() {
+        dismiss(animated: true)
     }
 }
