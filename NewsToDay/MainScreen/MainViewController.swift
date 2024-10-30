@@ -15,7 +15,17 @@ class MainViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        //showOnboarding()
+        showOnboarding()
+    }
+    
+    private func showOnboarding() {
+        let userDefaults = UserDefaults.standard
+        let onBoardinngWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
+        if onBoardinngWasViewed == false {
+            let onboardingViewController = ViewControllerSecond()
+            onboardingViewController.modalPresentationStyle = .fullScreen
+            present(onboardingViewController, animated: true)
+        }
     }
     
     private func createLayoutSection(group: NSCollectionLayoutGroup,
