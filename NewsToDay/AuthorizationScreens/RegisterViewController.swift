@@ -158,6 +158,7 @@ extension RegisterViewController {
         
         sender.layer.insertSublayer(borderLayer, at: 0)
         sender.leftView?.subviews.first?.tintColor = .purplePrimary
+        sender.textContentType = .oneTimeCode
         
         guard let textCount = sender.text?.count else { return }
         if textCount >= 1 {
