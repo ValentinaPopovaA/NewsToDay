@@ -75,11 +75,48 @@ class LoginViewController: UIViewController {
         setupViews()
         setConstraints()
         hideKeyboardWhenTappedAround()
+        
+        // MARK: - УБРАТЬ! Принудительный выход при включении
+        AuthService.shared.signOut { result in
+            switch result {
+            case .success():
+                print("Успешный выход")
+            case .failure(let error):
+                print("Ошибка выхода: \(error.localizedDescription)")
+            }
+        }
     }
     
     
     @objc func loginButtonTapped() {
         print("loginButtonTapped")
+        
+        guard let email = emailTF.text else { return }
+        guard let password = passwordTF.text else { return }
+        
+        
+        AuthService.shared.isSignedIn() ? navigateToMainScreen() : signInUser(email: email, password: password)
+        
+    }
+    
+    private func signInUser(email: String, password: String) {
+        AuthService.shared.signIn(email: email, password: password) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let authResult):
+                print("Пользователь вошел: \(authResult.user.uid)")
+                self.navigateToMainScreen()
+            case .failure(let error):
+                print("Ошибка входа: \(error.localizedDescription)")
+                AlertService.shared.showError(error, on: self)
+            }
+        }
+    }
+    
+    private func navigateToMainScreen() {
+        let vc = MainViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     @objc func signUpButtonTapped() {
