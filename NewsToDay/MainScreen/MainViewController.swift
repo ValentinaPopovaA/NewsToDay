@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        showOnboarding()
+        //showOnboarding()
     }
     
     private func showOnboarding() {
