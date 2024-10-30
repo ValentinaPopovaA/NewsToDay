@@ -22,7 +22,7 @@ class MainViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         let onBoardinngWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
         if onBoardinngWasViewed == false {
-            let onboardingViewController = ViewControllerSecond()
+            let onboardingViewController = OnboardingViewController()
             onboardingViewController.modalPresentationStyle = .fullScreen
             present(onboardingViewController, animated: true)
         }
