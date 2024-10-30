@@ -10,6 +10,15 @@ import UIKit
 
 class RegisterViewController: UIViewController {
     
+    enum RegistrationError: Error {
+        case passwordsMismatch
+        case emptyUsername
+        case emptyEmail
+        case emptyPassword
+        case emptyPasswordRepeat
+        case invalidEmail
+    }
+    
     private lazy var titleLabel = UILabel.createLabel(
         text: "Welcome to NewsToDay",
         fontSize: 24,
@@ -55,7 +64,7 @@ class RegisterViewController: UIViewController {
         togglePassword: true)
     
     private lazy var passwordRepeatTF = UITextField.createTextField(
-        placeholder: "Password",
+        placeholder: "Repeat password",
         fontSize: 16,
         textColor: .grayPrimary!,
         cornerRadius: 12,
@@ -101,16 +110,99 @@ class RegisterViewController: UIViewController {
     
     
     @objc func loginButtonTapped() {
-        print("loginButtonTapped")
+        
+        // Проверка на правильность ввода данных
+        switch validateInputs() {
+        case .success:
+            register(email: emailTF.text!, password: passwordTF.text!, username: usernameTF.text!)
+            
+        case .failure(let error):
+            switch error {
+            case .passwordsMismatch:
+                AlertService.shared.showAlert(title: "Ошибка", message: "Пароли не совпадают", on: self)
+            case .emptyUsername:
+                AlertService.shared.showAlert(title: "Ошибка", message: "Имя пользователя не должно быть пустым", on: self)
+            case .emptyEmail:
+                AlertService.shared.showAlert(title: "Ошибка", message: "Email не должен быть пустым", on: self)
+            case .invalidEmail:
+                AlertService.shared.showAlert(title: "Ошибка", message: "Введите корректный адрес электронной почты", on: self)
+            case .emptyPassword:
+                AlertService.shared.showAlert(title: "Ошибка", message: "Пароль не должен быть пустым", on: self)
+            case .emptyPasswordRepeat:
+                AlertService.shared.showAlert(title: "Ошибка", message: "Повтор пароля не должен быть пустым", on: self)
+            }
+        }
+    }
+    
+    
+    private func register(email: String, password: String, username: String) {
+        AuthService.shared.register(email: email, password: password, username: username) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let authDataResult):
+                print("Пользователь зарегистрирован", authDataResult.user.uid)
+                AlertService.shared.showAlert(title: "Регистрация успешна", message: "Пожалуйста, авторизуйтесь", on: self) {
+                    AuthService.shared.signOut { result in
+                        switch result {
+                        case .success():
+                            print("Зарегистрирован и ожидаем авторизацию")
+                        case .failure(let error):
+                            print("Зарегистрирован, но что-то пошло не так - \(error.localizedDescription)")
+                        }
+                    }
+                    self.navigateToLogin()
+                }
+            case .failure(let error):
+                AlertService.shared.showError(error, on: self)
+            }
+        }
     }
     
     @objc func signInButtonTapped() {
+        navigateToLogin()
+    }
+    
+    private func navigateToLogin() {
         let vc = LoginViewController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
+}
+
+// MARK: - Валидность полей ввода
+extension RegisterViewController {
+    private func validateInputs() -> Result<Void, RegistrationError> {
+        guard let username = usernameTF.text, !username.isEmpty else {
+            return .failure(.emptyUsername)
+        }
+        guard let email = emailTF.text, !email.isEmpty else {
+            return .failure(.emptyEmail)
+        }
+        
+        guard isValidEmail(email) else {
+                return .failure(.invalidEmail)
+            }
+        
+        guard let password = passwordTF.text, !password.isEmpty else {
+            return .failure(.emptyPassword)
+        }
+        guard let passwordRepeat = passwordRepeatTF.text, !passwordRepeat.isEmpty else {
+            return .failure(.emptyPasswordRepeat)
+        }
+        
+        if password != passwordRepeat {
+            return .failure(.passwordsMismatch)
+        }
+        
+        return .success(())
+    }
     
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
+    }
 }
 
 // MARK: - KeyBoard

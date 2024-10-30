@@ -75,18 +75,7 @@ class LoginViewController: UIViewController {
         setupViews()
         setConstraints()
         hideKeyboardWhenTappedAround()
-        
-        // MARK: - УБРАТЬ! Принудительный выход при включении
-        AuthService.shared.signOut { result in
-            switch result {
-            case .success():
-                print("Успешный выход")
-            case .failure(let error):
-                print("Ошибка выхода: \(error.localizedDescription)")
-            }
-        }
     }
-    
     
     @objc func loginButtonTapped() {
         print("loginButtonTapped")

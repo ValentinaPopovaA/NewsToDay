@@ -16,7 +16,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
-        let rootViewController = LoginViewController()
+        // MARK: -  Принудительный выход при включении
+        AuthService.shared.signOut { result in
+            switch result {
+            case .success():
+                print("Успешный выход")
+            case .failure(let error):
+                print("Ошибка выхода: \(error.localizedDescription)")
+            }
+        }
+        
+        var rootViewController = UIViewController()
+        
+        if AuthService.shared.isSignedIn() {
+            print("Пользователь был авторизован до этого")
+            rootViewController = MainViewController()
+        } else {
+            rootViewController = LoginViewController()
+            print("Пользователь не был авторизован до этого")
+        }
         
         window.rootViewController = rootViewController
         self.window = window
