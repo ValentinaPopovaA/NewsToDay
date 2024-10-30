@@ -18,8 +18,31 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let topLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .black)
-    private let bottomLabel = UILabel(font: .boldSystemFont(ofSize: 16), textColor: .gray)
+    
+   // private let topLabel = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .black)
+    //private let bottomLabel = UILabel(font: .boldSystemFont(ofSize: 16), textColor: .gray)
+    
+    private let topLabel: UILabel = {
+            return UILabel.createLabel(
+                text: "Hello, World!",
+                fontSize: 20,
+                textColor: .black,
+                isBold: true,
+                textAlignment: .center,
+                numberOfLines: 1
+            )
+        }()
+    
+    private let bottomLabel: UILabel = {
+            return UILabel.createLabel(
+                text: "Hello, World!",
+                fontSize: 16,
+                textColor: .gray,
+                isBold: true,
+                textAlignment: .center,
+                numberOfLines: 4
+            )
+        }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,9 +56,7 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     
     private func setupViews() {
         addSubview(backgroundImageView)
-        topLabel.textAlignment = .center
         addSubview(topLabel)
-        bottomLabel.textAlignment = .center
         bottomLabel.numberOfLines = 4
         addSubview(bottomLabel)
 
