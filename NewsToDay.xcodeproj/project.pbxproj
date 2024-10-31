@@ -49,6 +49,10 @@
 		A7BDBE212CD271B00095A1E9 /* RecomendedNewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BDBE202CD271B00095A1E9 /* RecomendedNewsCollectionViewCell.swift */; };
 		A7BDBE2A2CD3B3610095A1E9 /* UIView + Extansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BDBE242CD3B3600095A1E9 /* UIView + Extansion.swift */; };
 		A7BDBE2C2CD3B3610095A1E9 /* UILabel + Extancion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BDBE262CD3B3600095A1E9 /* UILabel + Extancion.swift */; };
+		A7BDBE412CD3CA0B0095A1E9 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BDBE3D2CD3CA0A0095A1E9 /* CustomPageControl.swift */; };
+		A7BDBE422CD3CA0B0095A1E9 /* CastomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BDBE3E2CD3CA0A0095A1E9 /* CastomLayout.swift */; };
+		A7BDBE432CD3CA0B0095A1E9 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BDBE3F2CD3CA0B0095A1E9 /* OnboardingCollectionViewCell.swift */; };
+		A7BDBE442CD3CA0B0095A1E9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BDBE402CD3CA0B0095A1E9 /* OnboardingViewController.swift */; };
 		A7D7DB0A2CCA4A9200F0FCBE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D7DB092CCA4A9200F0FCBE /* Constants.swift */; };
 		A7D7DB0E2CCA57A500F0FCBE /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D7DB0D2CCA57A500F0FCBE /* BaseRequest.swift */; };
 		A7D7DB142CCAB4FD00F0FCBE /* NetworkDocumentation.md in Resources */ = {isa = PBXBuildFile; fileRef = A7D7DB132CCAB4FD00F0FCBE /* NetworkDocumentation.md */; };
@@ -105,6 +109,10 @@
 		A7BDBE202CD271B00095A1E9 /* RecomendedNewsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomendedNewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		A7BDBE242CD3B3600095A1E9 /* UIView + Extansion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView + Extansion.swift"; sourceTree = "<group>"; };
 		A7BDBE262CD3B3600095A1E9 /* UILabel + Extancion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel + Extancion.swift"; sourceTree = "<group>"; };
+		A7BDBE3D2CD3CA0A0095A1E9 /* CustomPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
+		A7BDBE3E2CD3CA0A0095A1E9 /* CastomLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CastomLayout.swift; sourceTree = "<group>"; };
+		A7BDBE3F2CD3CA0B0095A1E9 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
+		A7BDBE402CD3CA0B0095A1E9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		A7D7DB092CCA4A9200F0FCBE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A7D7DB0D2CCA57A500F0FCBE /* BaseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
 		A7D7DB132CCAB4FD00F0FCBE /* NetworkDocumentation.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NetworkDocumentation.md; sourceTree = "<group>"; };
@@ -320,6 +328,10 @@
 		A7BDBE382CD3C05A0095A1E9 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				A7BDBE3E2CD3CA0A0095A1E9 /* CastomLayout.swift */,
+				A7BDBE3D2CD3CA0A0095A1E9 /* CustomPageControl.swift */,
+				A7BDBE3F2CD3CA0B0095A1E9 /* OnboardingCollectionViewCell.swift */,
+				A7BDBE402CD3CA0B0095A1E9 /* OnboardingViewController.swift */,
 				A7BDBE262CD3B3600095A1E9 /* UILabel + Extancion.swift */,
 				A7BDBE242CD3B3600095A1E9 /* UIView + Extansion.swift */,
 			);
@@ -445,6 +457,7 @@
 				A7D7DB0A2CCA4A9200F0FCBE /* Constants.swift in Sources */,
 				A714A0ED2CC8ED7C00B6C123 /* TopHeadlinesRequest.swift in Sources */,
 				A79DF14C2CD11B380031A750 /* TitleView.swift in Sources */,
+				A7BDBE412CD3CA0B0095A1E9 /* CustomPageControl.swift in Sources */,
 				A714A0FB2CC8F0E600B6C123 /* PersistenceManager.swift in Sources */,
 				FCF32CEB2CCD006B00828852 /* LanguageViewController.swift in Sources */,
 				A7BDBE152CD26D5E0095A1E9 /* HomeView.swift in Sources */,
@@ -453,6 +466,7 @@
 				FCF32CE62CCA5E0C00828852 /* ProfileViewController.swift in Sources */,
 				A714A0A32CC578C700B6C123 /* SceneDelegate.swift in Sources */,
 				A79DF14A2CD11B380031A750 /* DescriptionView.swift in Sources */,
+				A7BDBE422CD3CA0B0095A1E9 /* CastomLayout.swift in Sources */,
 				A714A0CE2CC7CF1100B6C123 /* NewsCategory.swift in Sources */,
 				A714A0FF2CC8F5F700B6C123 /* ImageClient.swift in Sources */,
 				A7BDBE2C2CD3B3610095A1E9 /* UILabel + Extancion.swift in Sources */,
@@ -469,6 +483,8 @@
 				A7BDBE212CD271B00095A1E9 /* RecomendedNewsCollectionViewCell.swift in Sources */,
 				FCF32CEF2CCD19F500828852 /* LanguageCell.swift in Sources */,
 				FCF32CE92CCA5E4600828852 /* CustomView.swift in Sources */,
+				A7BDBE442CD3CA0B0095A1E9 /* OnboardingViewController.swift in Sources */,
+				A7BDBE432CD3CA0B0095A1E9 /* OnboardingCollectionViewCell.swift in Sources */,
 				08F97D4D2CC68D40003AAFC1 /* UIColor+Extension.swift in Sources */,
 				A714A0D02CC7D34A00B6C123 /* TermsViewController.swift in Sources */,
 				A714A0D32CC7D59D00B6C123 /* UILabel+Ext.swift in Sources */,
