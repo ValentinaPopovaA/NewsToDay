@@ -83,11 +83,11 @@ class OnboardingViewController: UIViewController {
             transformCell(cell, isEffect: true)
         } else {
             // Если ячейка еще не загружена, подождем немного
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                if let cell = self.collectionView.cellForItem(at: indexPath) {
-                    self.transformCell(cell, isEffect: true)
-                }
-            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                if let cell = self.collectionView.cellForItem(at: indexPath) {
+//                    self.transformCell(cell, isEffect: true)
+//                }
+//            }
         }
     }
     
@@ -128,11 +128,12 @@ class OnboardingViewController: UIViewController {
     
     private func setupOnboardingData() {
         
-        guard let imageZero = UIImage(named: "toronto"),
+        guard let imageZero = UIImage(named: "berlin"),
               let imageFirst = UIImage(named: "berlin"),
               let imageSecond = UIImage(named: "toronto"),
               let imageThird = UIImage(named: "vancouver"),
-              let imageForth = UIImage(named: "vancouver") else {
+              let imageForth = UIImage(named: "berlin")
+        else {
             print("Error: Image not found")
             return
         }
@@ -144,15 +145,15 @@ class OnboardingViewController: UIViewController {
             
             OnboardingStruct(topLabel: "Browse",
                              bottomLabel: "Discover things of this world.",
-                             image: imageSecond),
+                             image: imageFirst),
             
             OnboardingStruct(topLabel: "Bookmarks",
                              bottomLabel: "Saved articles to the library",
-                             image: imageThird),
-            
-            OnboardingStruct(topLabel: "Browse",
-                             bottomLabel: "Discover things of this world.",
                              image: imageSecond),
+            
+            OnboardingStruct(topLabel: "First to know",
+                             bottomLabel: "All news in one place, be the first to know last news.",
+                             image: imageThird),
             
             OnboardingStruct(topLabel: "",
                              bottomLabel: "",
@@ -163,7 +164,11 @@ class OnboardingViewController: UIViewController {
     @objc private func nextButtonTapped() {
         if collectionItem == 2 {
             nextButton.setTitle("Get Started", for: .normal)
-            print("Button")
+        }
+        
+        if collectionItem == 3 {
+            saveUserDefaults()
+            dismiss(animated: true, completion: nil)
         }
         
         if collectionItem < onboardingArray.count - 1 {
@@ -195,6 +200,8 @@ class OnboardingViewController: UIViewController {
             dismiss(animated: true, completion: nil)
         }
     }
+    
+// MARK: UserDefaults
     
     private func saveUserDefaults() {
         let userDefaults = UserDefaults.standard
