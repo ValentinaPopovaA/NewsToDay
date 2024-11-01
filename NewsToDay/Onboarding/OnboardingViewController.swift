@@ -128,11 +128,11 @@ class OnboardingViewController: UIViewController {
     
     private func setupOnboardingData() {
         
-        guard let imageZero = UIImage(named: "berlin"),
+        guard let imageZero = UIImage(named: "Screen"),
               let imageFirst = UIImage(named: "berlin"),
               let imageSecond = UIImage(named: "toronto"),
               let imageThird = UIImage(named: "vancouver"),
-              let imageForth = UIImage(named: "berlin")
+              let imageForth = UIImage(named: "Screen")
         else {
             print("Error: Image not found")
             return
