@@ -18,6 +18,7 @@ class OnboardingViewController: UIViewController {
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
     
+    
     // MARK: Properties
     
     private lazy var nextButton: UIButton = {
@@ -33,6 +34,8 @@ class OnboardingViewController: UIViewController {
     }()
     
     private let pageControl = CustomPageControl()
+    
+    
     
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -60,34 +63,34 @@ class OnboardingViewController: UIViewController {
         setupOnboardingData()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        guard onboardingArray.count > 1 else { return }
-//
-//        // Прокрутка к второй ячейке
-//        collectionItem = 1
-//        let indexPath = IndexPath(item: collectionItem, section: 0)
-//        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//        pageControl.currentPage = collectionItem
-//
-//        // Вызываем анимацию увеличения после прокрутки
-//        if let cell = collectionView.cellForItem(at: indexPath) {
-//            transformCell(cell, isEffect: true)
-//        } else {
-//            // Если ячейка еще не загружена, подождем немного
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//                if let cell = self.collectionView.cellForItem(at: indexPath) {
-//                    self.transformCell(cell, isEffect: true)
-//                }
-//            }
-//        }
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        guard onboardingArray.count > 1 else { return }
+
+        // Прокрутка к второй ячейке
+        collectionItem = 1
+        let indexPath = IndexPath(item: collectionItem, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        pageControl.currentPage = collectionItem
+
+        // Вызываем анимацию увеличения после прокрутки
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            transformCell(cell, isEffect: true)
+        } else {
+            // Если ячейка еще не загружена, подождем немного
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                if let cell = self.collectionView.cellForItem(at: indexPath) {
+                    self.transformCell(cell, isEffect: true)
+                }
+            }
+        }
+    }
     
     // MARK: Setups
     
     private func setupView() {
-        view.backgroundColor = .purpleLighter
+        view.backgroundColor = .white
         
         view.addSubview(nextButton)
         
@@ -121,11 +124,12 @@ class OnboardingViewController: UIViewController {
     
     private func setupOnboardingData() {
         
-        guard let imageZero = UIImage(named: "Screen"),
+        guard let imageZero = UIImage(named: "toronto"),
               let imageFirst = UIImage(named: "berlin"),
               let imageSecond = UIImage(named: "toronto"),
               let imageThird = UIImage(named: "vancouver"),
-              let imageForth = UIImage(named: "Screen") else {
+              let imageForth = UIImage(named: "vancouver") else {
+            print("Error: Image not found")
             return
         }
         
@@ -153,7 +157,7 @@ class OnboardingViewController: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
-        if collectionItem == 1 {
+        if collectionItem == 2 {
             nextButton.setTitle("Get Started", for: .normal)
             print("Button")
         }
@@ -283,4 +287,3 @@ extension OnboardingViewController {
         ])
     }
 }
-
