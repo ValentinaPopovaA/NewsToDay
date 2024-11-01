@@ -83,11 +83,11 @@ class OnboardingViewController: UIViewController {
             transformCell(cell, isEffect: true)
         } else {
             // Если ячейка еще не загружена, подождем немного
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//                if let cell = self.collectionView.cellForItem(at: indexPath) {
-//                    self.transformCell(cell, isEffect: true)
-//                }
-//            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            //                if let cell = self.collectionView.cellForItem(at: indexPath) {
+            //                    self.transformCell(cell, isEffect: true)
+            //                }
+            //            }
         }
     }
     
@@ -201,7 +201,7 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-// MARK: UserDefaults
+    // MARK: UserDefaults
     
     private func saveUserDefaults() {
         let userDefaults = UserDefaults.standard
@@ -234,8 +234,6 @@ extension OnboardingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == layout.currentPage {
             print("didSelectItemAt")
-            
-            
         } else {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             
