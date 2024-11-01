@@ -37,11 +37,13 @@ final class LanguageViewController: UIViewController {
     
     private var selectedLanguageIndex: IndexPath?
     private let languages = ["English", "Russian"]
+    private let defaultLanguage = "English"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        loadSelectedLanguage()
         addButtonAction()
         addSubViews()
         applyConstraints()
@@ -64,7 +66,7 @@ final class LanguageViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableView.heightAnchor.constraint(equalToConstant: 144) // Увеличили высоту для учета пустой ячейки
+            tableView.heightAnchor.constraint(equalToConstant: 144)
         ])
     }
     
@@ -74,6 +76,17 @@ final class LanguageViewController: UIViewController {
     
     @objc private func backButtonTapped() {
         dismiss(animated: true)
+    }
+    
+    private func loadSelectedLanguage() {
+        let savedLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? defaultLanguage
+        if let index = languages.firstIndex(of: savedLanguage) {
+            selectedLanguageIndex = IndexPath(row: index == 0 ? 0 : 2, section: 0)
+        }
+    }
+    
+    private func saveSelectedLanguage(_ language: String) {
+        UserDefaults.standard.set(language, forKey: "selectedLanguage")
     }
 }
 
@@ -92,12 +105,11 @@ extension LanguageViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let languageIndex = indexPath.row > 1 ? 1 : 0
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: LanguageCell.reuseIdentifier, for: indexPath) as? LanguageCell else {
             return UITableViewCell()
         }
         
-        let isSelected = IndexPath(row: languageIndex, section: 0) == selectedLanguageIndex
+        let isSelected = IndexPath(row: languageIndex == 1 ? 2 : 0, section: 0) == selectedLanguageIndex
         cell.configure(with: languages[languageIndex], isSelected: isSelected)
         
         return cell
@@ -107,7 +119,10 @@ extension LanguageViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 1 { return }
         
-        selectedLanguageIndex = indexPath.row > 1 ? IndexPath(row: 1, section: 0) : IndexPath(row: 0, section: 0)
+        selectedLanguageIndex = indexPath
+        let selectedLanguage = languages[indexPath.row > 1 ? 1 : 0]
+        saveSelectedLanguage(selectedLanguage)
+        
         tableView.reloadData()
     }
     

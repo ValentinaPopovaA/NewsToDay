@@ -33,31 +33,29 @@ final class TabBarController: UITabBarController {
         tabBar.layer.cornerRadius = 12
         tabBar.layer.masksToBounds = true
         
-        let browseViewController = UIViewController()
-        browseViewController.view.backgroundColor = .cyan
-        let categoriesViewController = UIViewController()
-        let bookmarksViewController = UIViewController()
-        let profileViewController = ProfileViewController()
+        let browseNavController = UINavigationController(rootViewController: HomeViewController())
+        let categoriesNavController = UINavigationController(rootViewController: CategoriesViewController())
+        let bookmarksNavController = UINavigationController(rootViewController: FavoritesViewController())
+        let profileNavController = UINavigationController(rootViewController: ProfileViewController())
         
-        browseViewController.tabBarItem = UITabBarItem(title: nil,
-                                                       image: UIImage(named: "browse"),
-                                                       tag: Tabs.browse.rawValue)
-        categoriesViewController.tabBarItem = UITabBarItem(title: nil,
-                                                           image: UIImage(named: "categories"),
-                                                           tag: Tabs.categories.rawValue)
-        bookmarksViewController.tabBarItem = UITabBarItem(title: nil,
-                                                          image: UIImage(named: "bookmarks"),
-                                                          tag: Tabs.bookmarks.rawValue)
-        profileViewController.tabBarItem = UITabBarItem(title: nil,
-                                                        image: UIImage(named: "profile"),
-                                                        tag: Tabs.profile.rawValue)
-        
+        browseNavController.tabBarItem = UITabBarItem(title: nil,
+                                                      image: UIImage(named: "browse"),
+                                                      tag: Tabs.browse.rawValue)
+        categoriesNavController.tabBarItem = UITabBarItem(title: nil,
+                                                          image: UIImage(named: "categories"),
+                                                          tag: Tabs.categories.rawValue)
+        bookmarksNavController.tabBarItem = UITabBarItem(title: nil,
+                                                         image: UIImage(named: "bookmarks"),
+                                                         tag: Tabs.bookmarks.rawValue)
+        profileNavController.tabBarItem = UITabBarItem(title: nil,
+                                                       image: UIImage(named: "profile"),
+                                                       tag: Tabs.profile.rawValue)
         
         setViewControllers([
-            browseViewController,
-            categoriesViewController,
-            bookmarksViewController,
-            profileViewController
+            browseNavController,
+            categoriesNavController,
+            bookmarksNavController,
+            profileNavController
         ], animated: false)
         
         

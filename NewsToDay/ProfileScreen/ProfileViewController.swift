@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -22,7 +22,10 @@ final class ProfileViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 34
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .gray
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -61,6 +64,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
         view.backgroundColor = .white
         
         addSubViews()
@@ -76,6 +80,10 @@ final class ProfileViewController: UIViewController {
         languageView.translatesAutoresizingMaskIntoConstraints = false
         signOutView.translatesAutoresizingMaskIntoConstraints = false
         termsView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Жест для avatarImageView
+        let avatarTapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarImageViewTapped))
+        avatarImageView.addGestureRecognizer(avatarTapGesture)
 
         // Жест для languageView
         let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(languageViewTapped))
@@ -126,6 +134,26 @@ final class ProfileViewController: UIViewController {
             signOutView.heightAnchor.constraint(equalTo: languageView.heightAnchor),
             
         ])
+    }
+    
+    @objc private func avatarImageViewTapped() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let selectedImage = info[.originalImage] as? UIImage {
+            avatarImageView.image = selectedImage
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     @objc private func languageViewTapped() {
