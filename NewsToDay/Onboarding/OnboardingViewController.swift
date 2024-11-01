@@ -18,7 +18,6 @@ class OnboardingViewController: UIViewController {
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
     
-    
     // MARK: Properties
     
     private lazy var nextButton: UIButton = {
@@ -34,8 +33,6 @@ class OnboardingViewController: UIViewController {
     }()
     
     private let pageControl = CustomPageControl()
-    
-    
     
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -63,17 +60,24 @@ class OnboardingViewController: UIViewController {
         setupOnboardingData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         guard onboardingArray.count > 1 else { return }
-
+        
         // Прокрутка к второй ячейке
         collectionItem = 1
         let indexPath = IndexPath(item: collectionItem, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         pageControl.currentPage = collectionItem
-
+        
+        layout.currentPage = indexPath.item
+        layout.previousOffset = layout.updateOffset(collectionView)
+        
         // Вызываем анимацию увеличения после прокрутки
         if let cell = collectionView.cellForItem(at: indexPath) {
             transformCell(cell, isEffect: true)
@@ -218,7 +222,22 @@ extension OnboardingViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension OnboardingViewController: UICollectionViewDelegate {}
+extension OnboardingViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item == layout.currentPage {
+            print("didSelectItemAt")
+            
+            
+        } else {
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            
+            layout.currentPage = indexPath.item
+            layout.previousOffset = layout.updateOffset(collectionView)
+            setupCell()
+        }
+    }
+}
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
@@ -287,3 +306,4 @@ extension OnboardingViewController {
         ])
     }
 }
+

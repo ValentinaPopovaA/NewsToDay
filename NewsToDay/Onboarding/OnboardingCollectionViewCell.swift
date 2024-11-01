@@ -38,14 +38,12 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
         bottomLabel.textAlignment = .center
         bottomLabel.numberOfLines = 4
         addSubview(bottomLabel)
-
     }
     
     public func cellConfigure(model: OnboardingStruct, totalPages: Int, currentPage: Int) {
         topLabel.text = model.topLabel
         bottomLabel.text = model.bottomLabel
         backgroundImageView.image = model.image
-        
     }
     
     private func setConstraints() {
