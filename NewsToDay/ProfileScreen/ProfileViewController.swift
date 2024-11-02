@@ -174,5 +174,17 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     
     @objc private func signOutViewTapped() {
         print("sign out tapped!")
+        AuthService.shared.signOut { result in
+            switch result {
+            case .success():
+                print("Деавторизация прошла успешна")
+            case .failure(let error):
+                print("Деавторизация не выполнена - \(error.localizedDescription)")
+            }
+        }
+        
+        let vc = LoginViewController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
 }

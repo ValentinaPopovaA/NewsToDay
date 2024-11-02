@@ -29,12 +29,12 @@ extension UIButton {
         }
     }
     
-    func makeButtonwithLabel(label: String, buttonColor: buttonColor, textColor: textColor, target: Any?, action: Selector) -> UIButton {
+    func makeButtonwithLabel(label: String, buttonColor: buttonColor, textColor: textColor, fontSize: CGFloat, target: Any?, action: Selector) -> UIButton {
         let button = UIButton()
         button.backgroundColor = buttonColor.color
         button.setTitle(label, for: .normal)
         button.setTitleColor(textColor.color, for: .normal)
-        button.titleLabel?.font = .interMedium
+        button.titleLabel?.font = .interMedium?.withSize(fontSize)
         button.layer.cornerRadius = 12
         button.translatesAutoresizingMaskIntoConstraints = false
         

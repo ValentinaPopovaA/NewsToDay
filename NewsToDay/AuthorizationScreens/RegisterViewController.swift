@@ -96,7 +96,7 @@ class RegisterViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var loginButton = UIButton().makeButtonwithLabel(label: "Sign In", buttonColor: .purplePrimary, textColor: .white, target: self, action: #selector(loginButtonTapped))
+    private lazy var loginButton = UIButton().makeButtonwithLabel(label: "Sign Up", buttonColor: .purplePrimary, textColor: .white, fontSize: 16, target: self, action: #selector(loginButtonTapped))
     
     
     override func viewDidLoad() {

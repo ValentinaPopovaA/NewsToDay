@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var loginButton = UIButton().makeButtonwithLabel(label: "Sign In", buttonColor: .purplePrimary, textColor: .white, target: self, action: #selector(loginButtonTapped))
+    private lazy var loginButton = UIButton().makeButtonwithLabel(label: "Sign In", buttonColor: .purplePrimary, textColor: .white, fontSize: 16, target: self, action: #selector(loginButtonTapped))
     
     
     override func viewDidLoad() {
@@ -103,7 +103,7 @@ class LoginViewController: UIViewController {
     }
     
     private func navigateToMainScreen() {
-        let vc = MainViewController()
+        let vc = TabBarController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
