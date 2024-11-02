@@ -35,9 +35,13 @@ final class HomeViewController: UIViewController {
         fetchDataRecNews()
     }
     
+    // MARK: - Fetch Data Methods
+    
     private func fetchDataRecNews() {
         let categories = catManager.all.map { $0.name }
-        newsManager.request(BrowseRecommendationRequest(category: Category(name: categories.joined(separator: ","), icon: ""))) { [weak self] result in
+        let request = BrowseRecommendationRequest(category: Category(name: categories.joined(separator: ","), icon: ""))
+        
+        newsManager.request(request) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
@@ -51,7 +55,9 @@ final class HomeViewController: UIViewController {
     }
     
     private func fetchDataNews() {
-        newsManager.request(TopHeadlinesRequest(category: Category(name: "health", icon: ""), page: 1)) { [weak self] result in
+        let request = TopHeadlinesRequest(category: Category(name: "general", icon: ""), page: 1)
+        
+        newsManager.request(request) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
@@ -63,6 +69,8 @@ final class HomeViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Setup UI and Delegates
     
     private func setupViews() {
         homeView.collectionView.register(TextFieldCollectionViewCell.self, forCellWithReuseIdentifier: "TextFieldCollectionViewCell")
@@ -84,6 +92,8 @@ final class HomeViewController: UIViewController {
         homeView.collectionView.delegate = self
         homeView.collectionView.dataSource = self
     }
+    
+    // MARK: - Layout Configuration
     
     private func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
@@ -145,6 +155,8 @@ final class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - Collection View Delegate & Data Source
+
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -168,6 +180,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch sections[indexPath.section] {
         case .textField:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextFieldCollectionViewCell", for: indexPath) as! TextFieldCollectionViewCell
+            cell.searchTextField.delegate = self
             return cell
         case .topics:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionViewCell", for: indexPath) as! CategoriesCollectionViewCell
@@ -175,14 +188,26 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.configureCell(topicName: category.name)
             return cell
         case .news:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as! LatestNewsCollectionViewCell
-            if let news = newsData?[indexPath.row] {
-                cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as? LatestNewsCollectionViewCell else {
+                return UICollectionViewCell()
             }
+
+            if let news = newsData?[indexPath.row] {
+                let imageUrl = news.urlToImage != nil ? URL(string: news.urlToImage!) : nil
+                let topic = news.source.name ?? "ТЕМА"
+                let newsTitle = news.title ?? "НОВОСТЬ"
+
+                cell.configureCell(image: imageUrl, topic: topic, news: newsTitle, newsData: news)
+            } else {
+                cell.latestNewsImage.image = UIImage(named: "city_6")
+                cell.newsLabel.text = "НОВОСТЬ"
+                cell.topicNewsLabel.text = "ТЕМА"
+            }
+
             return cell
         case .recommended:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecomendedNewsCollectionViewCell", for: indexPath) as! RecomendedNewsCollectionViewCell
-            if let news = newsData?[indexPath.row] {
+            if let news = recNewsData?[indexPath.row] {
                 cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
             }
             return cell
@@ -203,5 +228,61 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let detailVC = NewsDetailViewController()
         detailVC.news = selectedNews
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension HomeViewController: UITextFieldDelegate {
+    func fetchSearchData(query: String) {
+        let searchRequest = SearchResultRequest(searchText: query, page: 1)
+        guard let url = searchRequest.url else {
+            print("Ошибка создания URL")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Ошибка запроса: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let data = data else {
+                    print("Данные не получены")
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let decodedData = try decoder.decode(NewsModel.self, from: data)
+                    self.newsData = decodedData.articles
+                    self.homeView.collectionView.reloadSections(IndexSet(integer: 2))
+                } catch {
+                    print("Ошибка декодирования: \(error.localizedDescription)")
+                }
+            }
+        }
+        task.resume()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != "" {
+            return true
+        } else {
+            textField.placeholder = "Введите запрос"
+            return false
+        }
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let search = textField.text {
+            fetchSearchData(query: search)
+        }
     }
 }
