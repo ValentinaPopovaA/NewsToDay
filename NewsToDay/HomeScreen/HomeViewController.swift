@@ -24,6 +24,7 @@ final class HomeViewController: UIViewController {
     private var newsData: [News]?
     
     private let sections: [SectionType] = [.textField, .topics, .news, .recommended]
+    private var selectedCategoryIndex: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,13 +51,13 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private func fetchDataNews() {
-        newsManager.request(TopHeadlinesRequest(category: Category(name: "health", icon: ""), page: 1)) { [weak self] result in
+    private func fetchDataNews(for categoryName: String = "health") {
+        newsManager.request(TopHeadlinesRequest(category: Category(name: categoryName, icon: ""), page: 1)) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
                     self?.newsData = data
-                    self?.homeView.collectionView.reloadData()
+                    self?.homeView.collectionView.reloadSections(IndexSet(integer: 2))
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -65,6 +66,7 @@ final class HomeViewController: UIViewController {
     }
     
     private func setupViews() {
+        homeView.collectionView.allowsMultipleSelection = false
         homeView.collectionView.register(TextFieldCollectionViewCell.self, forCellWithReuseIdentifier: "TextFieldCollectionViewCell")
         homeView.collectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: "CategoriesCollectionViewCell")
         homeView.collectionView.register(LatestNewsCollectionViewCell.self, forCellWithReuseIdentifier: "LatestNewsCollectionViewCell")
@@ -173,6 +175,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionViewCell", for: indexPath) as! CategoriesCollectionViewCell
             let category = catManager.all[indexPath.row]
             cell.configureCell(topicName: category.name)
+            cell.isSelected = (indexPath == selectedCategoryIndex)
             return cell
         case .news:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as! LatestNewsCollectionViewCell
@@ -192,6 +195,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedNews: News
         switch sections[indexPath.section] {
+        case .topics:
+            
+            selectedCategoryIndex = indexPath
+            let selectedCategory = catManager.all.remove(at: indexPath.row)
+            catManager.all.insert(selectedCategory, at: 0)
+            
+            previousSelectedIndex = IndexPath(row: 0, section: indexPath.section)
+            selectedCategoryIndex = previousSelectedIndex
+            
+            fetchDataNews(for: selectedCategory.name)
+            
+            collectionView.reloadSections(IndexSet(integer: indexPath.section))
+            collectionView.scrollToItem(at: previousSelectedIndex!, at: .left, animated: true)
+            return
+
         case .news:
             selectedNews = (newsData?[indexPath.row])!
         case .recommended:
