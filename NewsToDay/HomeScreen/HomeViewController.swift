@@ -22,6 +22,7 @@ final class HomeViewController: UIViewController {
     private var previousSelectedIndex: IndexPath?
     private var recNewsData: [News]?
     private var newsData: [News]?
+    private let persistenceManager: PersistenceManagerProtocol = PersistenceManager.shared
     
     private let sections: [SectionType] = [.textField, .topics, .news, .recommended]
     
@@ -148,7 +149,11 @@ final class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, LatestNewsCollectionViewCellDelegate {
+    func didTapBookmark(for news: News, bookMarkBtn: UIButton) {
+        print("Новость добавлена в закладки: \(news.title ?? "Без названия")")
+        isBookmarked(news, bookMarkBtn)
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
@@ -182,6 +187,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             if let news = newsData?[indexPath.row] {
                 cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
                 print("Cell Latest index - \(indexPath.row)")
+                cell.delegate = self
             }
             return cell
         case .recommended:
@@ -210,6 +216,39 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let detailVC = NewsDetailViewController()
             detailVC.news = selectedNews
             navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    private func isBookmarked(_ news: News, _ bookMarkBtn: UIButton){
+        
+        // Проверяем, есть ли новость в закладках
+        persistenceManager.retreiveNews { [weak self] result in
+            switch result {
+            case .success(let bookmarks):
+                if bookmarks.contains(where: { $0.url == news.url }) {
+                    // Новость уже в закладках, значит удаляем
+                    self?.persistenceManager.updateWith(bookmark: news, actionType: .remove) { error in
+                        if let error = error {
+                            print("Ошибка при удалении закладки: \(error)")
+                        } else {
+                            print("Новость успешно удалена из закладок!")
+                            bookMarkBtn.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+                        }
+                    }
+                } else {
+                    // Новость ещё не добавлена в закладки, добавляем
+                    self?.persistenceManager.updateWith(bookmark: news, actionType: .add) { error in
+                        if let error = error {
+                            print("Ошибка при добавлении закладки: \(error)")
+                        } else {
+                            print("Новость успешно добавлена в закладки!")
+                            bookMarkBtn.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Ошибка при получении закладок: \(error)")
+            }
         }
     }
 }
