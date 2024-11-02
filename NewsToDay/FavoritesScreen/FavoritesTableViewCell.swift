@@ -52,7 +52,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        favoriteImage.backgroundColor = .red
+        favoriteImage.backgroundColor = .gray
 //        favoriteImage.image = nil
     }
     
@@ -60,12 +60,12 @@ final class FavoritesTableViewCell: UITableViewCell {
     func setupCell(news: News) {
         titleLabel.text = news.title
         categoryLabel.text = news.source.name
-        favoriteImage.backgroundColor = .red
-//        if let imageUrl = news.urlToImage, let url = URL(string: imageUrl) {
-//            loadImage(from: url)
-//        } else {
-//            favoriteImage.image = placeholderImg
-//        }
+        favoriteImage.backgroundColor = .gray
+        if let imageUrl = news.urlToImage, let url = URL(string: imageUrl) {
+            loadImage(from: url)
+        } else {
+            favoriteImage.image = placeholderImg
+        }
     }
     
     private func loadImage(from url: URL) {
