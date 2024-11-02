@@ -80,14 +80,9 @@ class OnboardingViewController: UIViewController {
         
         // Вызываем анимацию увеличения после прокрутки
         if let cell = collectionView.cellForItem(at: indexPath) {
-            transformCell(cell, isEffect: true)
+            transformCell(cell)
         } else {
-            // Если ячейка еще не загружена, подождем немного
-            //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            //                if let cell = self.collectionView.cellForItem(at: indexPath) {
-            //                    self.transformCell(cell, isEffect: true)
-            //                }
-            //            }
+    
         }
     }
     
@@ -214,7 +209,6 @@ class OnboardingViewController: UIViewController {
 extension OnboardingViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Количество элементов в секции: \(onboardingArray.count)")
         return onboardingArray.count
     }
     
@@ -222,7 +216,6 @@ extension OnboardingViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: idOnboardingCell, for: indexPath) as! OnboardingCollectionViewCell
         let model = onboardingArray[indexPath.row]
         cell.cellConfigure(model: model, totalPages: onboardingArray.count, currentPage: indexPath.row)
-        print("Создание ячейки \(indexPath.row)")
         return cell
     }
 }
@@ -233,7 +226,6 @@ extension OnboardingViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == layout.currentPage {
-            print("didSelectItemAt")
         } else {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             
