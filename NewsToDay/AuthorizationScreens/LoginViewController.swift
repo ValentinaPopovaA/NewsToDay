@@ -67,6 +67,10 @@ class LoginViewController: UIViewController {
     
     private lazy var loginButton = UIButton().makeButtonwithLabel(label: "Sign In", buttonColor: .purplePrimary, textColor: .white, fontSize: 16, target: self, action: #selector(loginButtonTapped))
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showOnboarding()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +79,17 @@ class LoginViewController: UIViewController {
         setupViews()
         setConstraints()
         hideKeyboardWhenTappedAround()
+    }
+    
+    
+    private func showOnboarding() {
+        let userDefaults = UserDefaults.standard
+        let onBoardinngWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
+        if onBoardinngWasViewed == false {
+            let onboardingViewController = OnboardingViewController()
+            onboardingViewController.modalPresentationStyle = .fullScreen
+            present(onboardingViewController, animated: true)
+        }
     }
     
     @objc func loginButtonTapped() {

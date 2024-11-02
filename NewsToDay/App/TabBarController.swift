@@ -9,10 +9,10 @@ enum Tabs: Int {
 
 final class TabBarController: UITabBarController {
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        showOnboarding()
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        showOnboarding()
+//    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -28,15 +28,15 @@ final class TabBarController: UITabBarController {
         configure()
     }
     
-    private func showOnboarding() {
-        let userDefaults = UserDefaults.standard
-        let onBoardinngWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
-        if onBoardinngWasViewed == false {
-            let onboardingViewController = OnboardingViewController()
-            onboardingViewController.modalPresentationStyle = .fullScreen
-            present(onboardingViewController, animated: true)
-        }
-    }
+//    private func showOnboarding() {
+//        let userDefaults = UserDefaults.standard
+//        let onBoardinngWasViewed = userDefaults.bool(forKey: "OnBoardingWasViewed")
+//        if onBoardinngWasViewed == false {
+//            let onboardingViewController = OnboardingViewController()
+//            onboardingViewController.modalPresentationStyle = .fullScreen
+//            present(onboardingViewController, animated: true)
+//        }
+//    }
     
     private func configure() {
         tabBar.tintColor = .purplePrimary
