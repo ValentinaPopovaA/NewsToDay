@@ -51,10 +51,19 @@ class HeaderView: UIView {
     }
     
     func configure(backBtn: Selector, bookMarkIconBtn: Selector, shareIconBtn: Selector, target: UIViewController) {
-        print("configure start")
+        //        print("configure start")
         backButton.addTarget(target, action: backBtn, for: .touchUpInside)
         bookmarkIconButton.addTarget(target, action: bookMarkIconBtn, for: .touchUpInside)
         shareIconButton.addTarget(target, action: shareIconBtn, for: .touchUpInside)
+    }
+    
+    func updateBookmarkIcon(_ isBookmarked: Bool){
+        switch isBookmarked {
+        case true:
+            bookmarkIconButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+        case false:
+            bookmarkIconButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        }
     }
 }
 

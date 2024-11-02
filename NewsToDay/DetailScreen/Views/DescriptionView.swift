@@ -58,7 +58,7 @@ class DescriptionView: UIView {
 extension DescriptionView {
     
     private func setupViews() {
-        addSubview(titleLabel)
+//        addSubview(titleLabel)
         addSubview(descriptionLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -67,14 +67,14 @@ extension DescriptionView {
     }
     
     private func setConstraints() {
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 24),
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
-        ])
+//        NSLayoutConstraint.activate([
+//            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 24),
+//            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+//            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
+//        ])
         
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            descriptionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 24),
             descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             descriptionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
