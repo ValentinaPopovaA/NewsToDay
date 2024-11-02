@@ -55,7 +55,10 @@ final class HomeViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
-                    self?.newsData = data
+                    // Фильтрация пустых новостей
+                    self?.newsData = data!.filter { news in
+                        return !(news.title?.isEmpty ?? true) && !(news.urlToImage?.isEmpty ?? true)
+                    }
                     self?.homeView.collectionView.reloadData()
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -178,30 +181,36 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as! LatestNewsCollectionViewCell
             if let news = newsData?[indexPath.row] {
                 cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
+                print("Cell Latest index - \(indexPath.row)")
             }
             return cell
         case .recommended:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecomendedNewsCollectionViewCell", for: indexPath) as! RecomendedNewsCollectionViewCell
-            if let news = newsData?[indexPath.row] {
+            if let news = recNewsData?[indexPath.row] {
                 cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
+                print("Cell Recomended index - \(indexPath.row)")
             }
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedNews: News
+        let selectedNews: News?
+        
         switch sections[indexPath.section] {
         case .news:
-            selectedNews = (newsData?[indexPath.row])!
+            selectedNews = newsData?[indexPath.row]
         case .recommended:
-            selectedNews = (recNewsData?[indexPath.row])!
+            selectedNews = recNewsData?[indexPath.row]
         default:
             return
         }
         
-        let detailVC = NewsDetailViewController()
-        detailVC.news = selectedNews
-        navigationController?.pushViewController(detailVC, animated: true)
+        if let selectedNews = selectedNews {
+            let detailVC = NewsDetailViewController()
+            detailVC.news = selectedNews
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
 }
+
