@@ -40,7 +40,7 @@ final class TextFieldCollectionViewCell: UICollectionViewCell {
         return element
     }()
     
-    private lazy var searchTextField: UITextField = {
+    public lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Search"
         textField.backgroundColor = .grayLighter

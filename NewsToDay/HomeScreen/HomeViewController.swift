@@ -168,6 +168,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch sections[indexPath.section] {
         case .textField:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextFieldCollectionViewCell", for: indexPath) as! TextFieldCollectionViewCell
+            cell.searchTextField.delegate = self
             return cell
         case .topics:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionViewCell", for: indexPath) as! CategoriesCollectionViewCell
@@ -205,3 +206,65 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
+
+extension HomeViewController: UITextFieldDelegate {
+    
+    private func fetchSearchData(query: String) {
+        // Проверка, что текст поиска не пустой
+        guard !query.isEmpty else { return }
+        
+        // Выполнение сетевого запроса
+        newsManager.request(SearchResultRequest(searchRequest: query, page: 1)) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let data):
+                    if let data = data, !data.isEmpty {
+                        // Успешный запрос: обновляем данные и интерфейс
+                        self?.newsData = data
+                        self?.homeView.collectionView.reloadSections(IndexSet(integer: 2))
+                    } else {
+                        // Обработка пустого ответа, если данные отсутствуют
+                        self?.showAlert(message: "По вашему запросу ничего не найдено")
+                    }
+                case .failure(let error):
+                    // Обработка ошибки
+                    self?.handleError(error)
+                }
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true) // Закрывает клавиатуру
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Выполняем поиск, если текст в поле поиска существует
+        if let query = textField.text {
+            fetchSearchData(query: query)
+        }
+    }
+    
+    // Показать сообщение об ошибке пользователю
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func handleError(_ error: Error) {
+        var errorMessage = "Произошла ошибка. Повторите попытку позже."
+        
+        if let nsError = error as NSError? {
+            errorMessage = nsError.localizedDescription
+        } else if let newsError = error as? NewsError {
+            errorMessage = newsError.rawValue
+        } else if let errorResponse = error as? ErrorResponse {
+            errorMessage = errorResponse.description
+        }
+        
+        showAlert(message: errorMessage)
+    }
+}
+
