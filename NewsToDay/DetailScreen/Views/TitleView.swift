@@ -46,12 +46,17 @@ class TitleView: UIView {
     
     func configure(tagTitle: String, tagSelector: Selector, titleLabel: String, writerNameLabel: String, target: UIViewController) {
         
-        tagButton = UIButton().makeButtonwithLabel(
-            label: tagTitle,
-            buttonColor: .purplePrimary,
-            textColor: .white,
-            target: target,
-            action: tagSelector)
+        var config = UIButton.Configuration.filled()
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+        config.baseBackgroundColor = .purplePrimary
+        config.baseForegroundColor = .white
+        
+        config.attributedTitle = AttributedString(tagTitle, attributes: AttributeContainer([
+            .font: UIFont.boldSystemFont(ofSize: 12),
+            .foregroundColor: UIColor.white
+        ]))
+        
+        tagButton.configuration = config
         
         self.titleLabel.text = titleLabel
         self.writerNameLabel.text = writerNameLabel
@@ -81,8 +86,7 @@ extension TitleView {
         NSLayoutConstraint.activate([
             tagButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             tagButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            tagButton.widthAnchor.constraint(equalToConstant: 75),
-            tagButton.heightAnchor.constraint(equalToConstant: 32)
+            tagButton.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -8)
         ])
         
         NSLayoutConstraint.activate([
