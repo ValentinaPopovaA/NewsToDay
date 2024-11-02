@@ -45,6 +45,8 @@ final class TextFieldCollectionViewCell: UICollectionViewCell {
         textField.placeholder = "Search"
         textField.backgroundColor = .grayLighter
         textField.layer.cornerRadius = 8
+        textField.autocapitalizationType = .words
+        textField.returnKeyType = .search
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftView = paddingView

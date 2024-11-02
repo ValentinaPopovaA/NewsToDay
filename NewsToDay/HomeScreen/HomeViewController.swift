@@ -35,9 +35,13 @@ final class HomeViewController: UIViewController {
         fetchDataRecNews()
     }
     
+    // MARK: - Fetch Data Methods
+    
     private func fetchDataRecNews() {
         let categories = catManager.all.map { $0.name }
-        newsManager.request(BrowseRecommendationRequest(category: Category(name: categories.joined(separator: ","), icon: ""))) { [weak self] result in
+        let request = BrowseRecommendationRequest(category: Category(name: categories.joined(separator: ","), icon: ""))
+        
+        newsManager.request(request) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
@@ -51,7 +55,9 @@ final class HomeViewController: UIViewController {
     }
     
     private func fetchDataNews() {
-        newsManager.request(TopHeadlinesRequest(category: Category(name: "health", icon: ""), page: 1)) { [weak self] result in
+        let request = TopHeadlinesRequest(category: Category(name: "general", icon: ""), page: 1)
+        
+        newsManager.request(request) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
@@ -63,6 +69,8 @@ final class HomeViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Setup UI and Delegates
     
     private func setupViews() {
         homeView.collectionView.register(TextFieldCollectionViewCell.self, forCellWithReuseIdentifier: "TextFieldCollectionViewCell")
@@ -84,6 +92,8 @@ final class HomeViewController: UIViewController {
         homeView.collectionView.delegate = self
         homeView.collectionView.dataSource = self
     }
+    
+    // MARK: - Layout Configuration
     
     private func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
@@ -145,6 +155,8 @@ final class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - Collection View Delegate & Data Source
+
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -176,14 +188,26 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.configureCell(topicName: category.name)
             return cell
         case .news:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as! LatestNewsCollectionViewCell
-            if let news = newsData?[indexPath.row] {
-                cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as? LatestNewsCollectionViewCell else {
+                return UICollectionViewCell()
             }
+
+            if let news = newsData?[indexPath.row] {
+                let imageUrl = news.urlToImage != nil ? URL(string: news.urlToImage!) : nil
+                let topic = news.source.name ?? "ТЕМА"
+                let newsTitle = news.title ?? "НОВОСТЬ"
+
+                cell.configureCell(image: imageUrl, topic: topic, news: newsTitle, newsData: news)
+            } else {
+                cell.latestNewsImage.image = UIImage(named: "city_6")
+                cell.newsLabel.text = "НОВОСТЬ"
+                cell.topicNewsLabel.text = "ТЕМА"
+            }
+
             return cell
         case .recommended:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecomendedNewsCollectionViewCell", for: indexPath) as! RecomendedNewsCollectionViewCell
-            if let news = newsData?[indexPath.row] {
+            if let news = recNewsData?[indexPath.row] {
                 cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
             }
             return cell
@@ -207,64 +231,41 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
+// MARK: - UITextFieldDelegate
+
 extension HomeViewController: UITextFieldDelegate {
     
     private func fetchSearchData(query: String) {
-        // Проверка, что текст поиска не пустой
-        guard !query.isEmpty else { return }
-        
-        // Выполнение сетевого запроса
-        newsManager.request(SearchResultRequest(searchRequest: query, page: 1)) { [weak self] result in
+        newsManager.request(SearchResultRequest(searchRequest: query, page: 1)) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
-                    if let data = data, !data.isEmpty {
-                        // Успешный запрос: обновляем данные и интерфейс
-                        self?.newsData = data
-                        self?.homeView.collectionView.reloadSections(IndexSet(integer: 2))
-                    } else {
-                        // Обработка пустого ответа, если данные отсутствуют
-                        self?.showAlert(message: "По вашему запросу ничего не найдено")
-                    }
+                    self.newsData = data
+                    self.homeView.collectionView.reloadSections(IndexSet(integer: 2))
                 case .failure(let error):
-                    // Обработка ошибки
-                    self?.handleError(error)
+                    print(error.localizedDescription)
                 }
             }
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true) // Закрывает клавиатуру
+        textField.endEditing(true)
         return true
     }
-    
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != "" {
+            return true
+        } else {
+            textField.placeholder = "YEAAAAAHHH"
+            return false
+        }
+    }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
-        // Выполняем поиск, если текст в поле поиска существует
-        if let query = textField.text {
-            fetchSearchData(query: query)
+        if let search = textField.text {
+            fetchSearchData(query: search)
         }
-    }
-    
-    // Показать сообщение об ошибке пользователю
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func handleError(_ error: Error) {
-        var errorMessage = "Произошла ошибка. Повторите попытку позже."
-        
-        if let nsError = error as NSError? {
-            errorMessage = nsError.localizedDescription
-        } else if let newsError = error as? NewsError {
-            errorMessage = newsError.rawValue
-        } else if let errorResponse = error as? ErrorResponse {
-            errorMessage = errorResponse.description
-        }
-        
-        showAlert(message: errorMessage)
     }
 }
-

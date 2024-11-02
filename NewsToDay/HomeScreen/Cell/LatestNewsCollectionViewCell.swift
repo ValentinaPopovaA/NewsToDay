@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class LatestNewsCollectionViewCell: UICollectionViewCell {
     
     var bookMarkChangeColor: Bool = false
     
-    private lazy var latestNewsImage: UIImageView = {
+    lazy var latestNewsImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 12
@@ -19,14 +20,14 @@ final class LatestNewsCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var topicNewsLabel: UILabel = {
+    lazy var topicNewsLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .systemFont(ofSize: 12)
         return label
     }()
     
-    private lazy var newsLabel: UILabel = {
+    lazy var newsLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .interSemibold
@@ -106,27 +107,11 @@ final class LatestNewsCollectionViewCell: UICollectionViewCell {
     func configureCell(image: URL?, topic: String, news: String, newsData: News) {
         topicNewsLabel.text = topic
         newsLabel.text = news
-        setupImage(news: newsData)
-    }
-    
-    func setupImage(news: News) {
-        loadingActivityIndicator.startAnimating()
         
-        guard let urlToImage = news.urlToImage else {
-            latestNewsImage.image = placeholderImg
-            latestNewsImage.contentMode = .scaleAspectFill
-            loadingActivityIndicator.stopAnimating()
-            return
-        }
-        
-        ImageClient.shared.setImage(from: urlToImage, placeholderImage: placeholderImg) { [weak self] image in
-            guard let self = self else { return }
-            
-            DispatchQueue.main.async {
-                self.latestNewsImage.image = image ?? self.placeholderImg
-                self.latestNewsImage.contentMode = .scaleAspectFill
-                self.loadingActivityIndicator.stopAnimating()
-            }
+        if let image = image {
+            latestNewsImage.kf.setImage(with: image)
+        } else {
+            latestNewsImage.image = UIImage(named: "berlin")
         }
     }
 }

@@ -8,7 +8,9 @@
 import Foundation
 
 struct BaseRequest: DataRequest {
-    private let apiKey = "41863cb7688141519c1b55f8305bd23f"
+    private let apiKey = "698b732aca97446d853e299ac52ffed1"
+//    698b732aca97446d853e299ac52ffed1
+//    8e4cb38d557a45798ecdfa5b7c61f16e
     
     var endpoint: String
     var category: String?
