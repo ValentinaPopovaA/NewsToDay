@@ -43,6 +43,8 @@
 		A714A0F92CC8F08900B6C123 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0F82CC8F08900B6C123 /* ErrorResponse.swift */; };
 		A714A0FB2CC8F0E600B6C123 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0FA2CC8F0E600B6C123 /* PersistenceManager.swift */; };
 		A714A0FF2CC8F5F700B6C123 /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A714A0FE2CC8F5F700B6C123 /* ImageClient.swift */; };
+		A72234AD2CD6A475002D4CC7 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A72234AC2CD6A475002D4CC7 /* IQKeyboardManagerSwift */; };
+		A72234B02CD6A4F9002D4CC7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A72234AF2CD6A4F9002D4CC7 /* Kingfisher */; };
 		A79DF1452CD11B180031A750 /* NewsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DF1442CD11B180031A750 /* NewsDetailViewController.swift */; };
 		A79DF14A2CD11B380031A750 /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DF1472CD11B370031A750 /* DescriptionView.swift */; };
 		A79DF14B2CD11B380031A750 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79DF1482CD11B370031A750 /* HeaderView.swift */; };
@@ -147,8 +149,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A72234B02CD6A4F9002D4CC7 /* Kingfisher in Frameworks */,
 				5796092F2CD2AC6E008E3FE1 /* FirebaseAuth in Frameworks */,
 				5796094A2CD2CC6A008E3FE1 /* FirebaseFirestore in Frameworks */,
+				A72234AD2CD6A475002D4CC7 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +438,10 @@
 			dependencies = (
 			);
 			name = NewsToDay;
+			packageProductDependencies = (
+				A72234AC2CD6A475002D4CC7 /* IQKeyboardManagerSwift */,
+				A72234AF2CD6A4F9002D4CC7 /* Kingfisher */,
+			);
 			productName = NewsToDay;
 			productReference = A714A09D2CC578C700B6C123 /* NewsToDay.app */;
 			productType = "com.apple.product-type.application";
@@ -464,6 +472,8 @@
 			mainGroup = A714A0942CC578C700B6C123;
 			packageReferences = (
 				5796092D2CD2AC6E008E3FE1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A72234AB2CD6A475002D4CC7 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				A72234AE2CD6A4F9002D4CC7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = A714A09E2CC578C700B6C123 /* Products */;
 			projectDirPath = "";
@@ -778,7 +788,23 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 11.4.0;
+				minimumVersion = 10.9.0;
+			};
+		};
+		A72234AB2CD6A475002D4CC7 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.16;
+			};
+		};
+		A72234AE2CD6A4F9002D4CC7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.7.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -792,6 +818,16 @@
 		579609492CD2CC6A008E3FE1 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirebaseFirestore;
+		};
+		A72234AC2CD6A475002D4CC7 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A72234AB2CD6A475002D4CC7 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		A72234AF2CD6A4F9002D4CC7 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A72234AE2CD6A4F9002D4CC7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
