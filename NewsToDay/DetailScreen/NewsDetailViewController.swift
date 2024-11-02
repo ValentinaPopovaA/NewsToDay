@@ -57,7 +57,7 @@ class NewsDetailViewController: UIViewController {
                     self?.navigationBarComponent.updateBookmarkIcon(true)
                 }
             case .failure(let error):
-                break
+                print(error.localizedDescription)
             }
         }
     }

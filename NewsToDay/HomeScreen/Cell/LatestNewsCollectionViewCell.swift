@@ -117,7 +117,6 @@ final class LatestNewsCollectionViewCell: UICollectionViewCell {
     func configureCell(image: URL?, topic: String, news: String, newsData: News) {
         topicNewsLabel.text = topic
         newsLabel.text = news
-        setupImage(news: newsData)
         newsItem = newsData
         
         if let image = image {
@@ -138,7 +137,7 @@ final class LatestNewsCollectionViewCell: UICollectionViewCell {
                     self?.bookMarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
                 }
             case .failure(let error):
-                break
+                print(error.localizedDescription)
             }
         }
     }

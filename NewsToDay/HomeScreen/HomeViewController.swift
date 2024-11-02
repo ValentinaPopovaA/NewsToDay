@@ -196,8 +196,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .news:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as? LatestNewsCollectionViewCell else {
                 return UICollectionViewCell()
-                cell.delegate = self
+                
             }
+                cell.delegate = self
 
             if let news = newsData?[indexPath.row] {
                 let imageUrl = news.urlToImage != nil ? URL(string: news.urlToImage!) : nil
