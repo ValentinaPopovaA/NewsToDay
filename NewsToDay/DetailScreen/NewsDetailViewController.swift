@@ -11,6 +11,7 @@ class NewsDetailViewController: UIViewController {
     
     var news: News?
     let navigationBarComponent = HeaderView() // Вью с иконкой для возвращения назад, создание закладки и иконкой для шеринга.
+    let persistenceManager: PersistenceManagerProtocol = PersistenceManager.shared
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -47,6 +48,18 @@ class NewsDetailViewController: UIViewController {
         setupViews()
         setConstraints()
         configure()
+        
+        persistenceManager.retreiveNews { [weak self] result in
+            switch result {
+            case .success(let bookmarks):
+                guard let news = self?.news else { return }
+                if bookmarks.contains(where: { $0.url == news.url }) {
+                    self?.navigationBarComponent.updateBookmarkIcon(true)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func configure() {
@@ -76,15 +89,14 @@ class NewsDetailViewController: UIViewController {
                 self?.imageView.image = image
             }
         }
-        
     }
     
     @objc func backBtnTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func bookMarkIconBtnTapped() {
-        print("bookMarkIconBtnTapped")
+            navigationController?.popViewController(animated: true)
+        }
+        
+    @objc func bookMarkIconBtnTapped(sender: UIButton) {
+        isBookmarked()
     }
     
     @objc func shareIconBtnTapped() {
@@ -92,7 +104,40 @@ class NewsDetailViewController: UIViewController {
     }
     
     @objc func tagBtnTapped() {
-        print("tagBtnTapped")
+    }
+    
+    private func isBookmarked(){
+        guard let news = news else { return }
+        
+        // Проверяем, есть ли новость в закладках
+        persistenceManager.retreiveNews { [weak self] result in
+            switch result {
+            case .success(let bookmarks):
+                if bookmarks.contains(where: { $0.url == news.url }) {
+                    // Новость уже в закладках, значит удаляем
+                    self?.persistenceManager.updateWith(bookmark: news, actionType: .remove) { error in
+                        if let error = error {
+                            print("Ошибка при удалении закладки: \(error)")
+                        } else {
+                            print("Новость успешно удалена из закладок!")
+                            self?.navigationBarComponent.updateBookmarkIcon(false)
+                        }
+                    }
+                } else {
+                    // Новость ещё не добавлена в закладки, добавляем
+                    self?.persistenceManager.updateWith(bookmark: news, actionType: .add) { error in
+                        if let error = error {
+                            print("Ошибка при добавлении закладки: \(error)")
+                        } else {
+                            print("Новость успешно добавлена в закладки!")
+                            self?.navigationBarComponent.updateBookmarkIcon(true)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Ошибка при получении закладок: \(error)")
+            }
+        }
     }
 }
 

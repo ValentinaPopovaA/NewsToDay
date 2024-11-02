@@ -9,6 +9,7 @@ import UIKit
 
 final class RecomendedNewsCollectionViewCell: UICollectionViewCell {
     
+    
     private lazy var cellImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill

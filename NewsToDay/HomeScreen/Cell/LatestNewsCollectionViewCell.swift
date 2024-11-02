@@ -8,9 +8,15 @@
 import UIKit
 import Kingfisher
 
+protocol LatestNewsCollectionViewCellDelegate: AnyObject {
+    func didTapBookmark(for news: News, bookMarkBtn: UIButton)
+}
+
 final class LatestNewsCollectionViewCell: UICollectionViewCell {
     
     var bookMarkChangeColor: Bool = false
+    private var newsItem: News?
+    weak var delegate: LatestNewsCollectionViewCellDelegate?
     
     lazy var latestNewsImage: UIImageView = {
         let imageView = UIImageView()
@@ -44,25 +50,29 @@ final class LatestNewsCollectionViewCell: UICollectionViewCell {
     }()
     
     @objc private func addToBookmarks() {
-        if bookMarkChangeColor == false {
-            bookMarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
-            bookMarkButton.tintColor = .purplePrimary
-            bookMarkChangeColor = true
-//            guard let data = newsData else { return }
-//            //print(data)
-//            bookmarkManager.saveNewsToDefaults(news: data)
-        } else {
-            bookMarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
-            bookMarkButton.tintColor = .white
-            bookMarkChangeColor = false
-//            guard let data = newsData else { return }
-//            //print(data)
-//            bookmarkManager.deleteNewsFromDefaults(news: data)
-        }
+        guard let newsItem = newsItem else { return }
+        delegate?.didTapBookmark(for: newsItem, bookMarkBtn: bookMarkButton)
+        
+//        if bookMarkChangeColor == false {
+//            bookMarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+//            bookMarkButton.tintColor = .purplePrimary
+//            bookMarkChangeColor = true
+////            guard let data = newsData else { return }
+////            //print(data)
+////            bookmarkManager.saveNewsToDefaults(news: data)
+//        } else {
+//            bookMarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+//            bookMarkButton.tintColor = .white
+//            bookMarkChangeColor = false
+////            guard let data = newsData else { return }
+////            //print(data)
+////            bookmarkManager.deleteNewsFromDefaults(news: data)
+//        }
     }
     
     private let placeholderImg = UIImage(named: "placeholder")
     private let loadingActivityIndicator = UIActivityIndicatorView(style: .medium)
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -107,11 +117,28 @@ final class LatestNewsCollectionViewCell: UICollectionViewCell {
     func configureCell(image: URL?, topic: String, news: String, newsData: News) {
         topicNewsLabel.text = topic
         newsLabel.text = news
+        newsItem = newsData
         
         if let image = image {
             latestNewsImage.kf.setImage(with: image)
         } else {
             latestNewsImage.image = UIImage(named: "berlin")
+        }
+    }
+    
+    private func isBookMarked() {
+        PersistenceManager.shared.retreiveNews { [weak self] result in
+            switch result {
+            case .success(let bookmarks):
+                guard let news = self?.newsItem else { return }
+                if bookmarks.contains(where: { $0.url == news.url }) {
+                    self?.bookMarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                } else {
+                    self?.bookMarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }

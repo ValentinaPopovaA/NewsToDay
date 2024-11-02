@@ -17,7 +17,7 @@ class TitleView: UIView {
         textColor: UIColor.white,
         isBold: true,
         textAlignment: .left,
-        numberOfLines: 2
+        numberOfLines: 0
     )
     
     private lazy var writerNameLabel = UILabel.createLabel(

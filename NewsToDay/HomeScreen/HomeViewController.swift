@@ -22,6 +22,7 @@ final class HomeViewController: UIViewController {
     private var previousSelectedIndex: IndexPath?
     private var recNewsData: [News]?
     private var newsData: [News]?
+    private let persistenceManager: PersistenceManagerProtocol = PersistenceManager.shared
     
     private let sections: [SectionType] = [.textField, .topics, .news, .recommended]
     
@@ -61,7 +62,10 @@ final class HomeViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
-                    self?.newsData = data
+                    // Фильтрация пустых новостей
+                    self?.newsData = data!.filter { news in
+                        return !(news.title?.isEmpty ?? true) && !(news.urlToImage?.isEmpty ?? true)
+                    }
                     self?.homeView.collectionView.reloadData()
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -155,9 +159,11 @@ final class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - Collection View Delegate & Data Source
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, LatestNewsCollectionViewCellDelegate {
+    func didTapBookmark(for news: News, bookMarkBtn: UIButton) {
+        print("Новость добавлена в закладки: \(news.title ?? "Без названия")")
+        isBookmarked(news, bookMarkBtn)
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
@@ -190,7 +196,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .news:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as? LatestNewsCollectionViewCell else {
                 return UICollectionViewCell()
+                
             }
+                cell.delegate = self
 
             if let news = newsData?[indexPath.row] {
                 let imageUrl = news.urlToImage != nil ? URL(string: news.urlToImage!) : nil
@@ -209,25 +217,62 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecomendedNewsCollectionViewCell", for: indexPath) as! RecomendedNewsCollectionViewCell
             if let news = recNewsData?[indexPath.row] {
                 cell.configureCell(image: URL(string: news.urlToImage ?? ""), topic: news.source.name ?? "", news: news.title ?? "", newsData: news)
+                print("Cell Recomended index - \(indexPath.row)")
             }
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedNews: News
+        let selectedNews: News?
+        
         switch sections[indexPath.section] {
         case .news:
-            selectedNews = (newsData?[indexPath.row])!
+            selectedNews = newsData?[indexPath.row]
         case .recommended:
-            selectedNews = (recNewsData?[indexPath.row])!
+            selectedNews = recNewsData?[indexPath.row]
         default:
             return
         }
         
-        let detailVC = NewsDetailViewController()
-        detailVC.news = selectedNews
-        navigationController?.pushViewController(detailVC, animated: true)
+        if let selectedNews = selectedNews {
+            let detailVC = NewsDetailViewController()
+            detailVC.news = selectedNews
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    private func isBookmarked(_ news: News, _ bookMarkBtn: UIButton){
+        
+        // Проверяем, есть ли новость в закладках
+        persistenceManager.retreiveNews { [weak self] result in
+            switch result {
+            case .success(let bookmarks):
+                if bookmarks.contains(where: { $0.url == news.url }) {
+                    // Новость уже в закладках, значит удаляем
+                    self?.persistenceManager.updateWith(bookmark: news, actionType: .remove) { error in
+                        if let error = error {
+                            print("Ошибка при удалении закладки: \(error)")
+                        } else {
+                            print("Новость успешно удалена из закладок!")
+                            bookMarkBtn.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+                        }
+                    }
+                } else {
+                    // Новость ещё не добавлена в закладки, добавляем
+                    self?.persistenceManager.updateWith(bookmark: news, actionType: .add) { error in
+                        if let error = error {
+                            print("Ошибка при добавлении закладки: \(error)")
+                        } else {
+                            print("Новость успешно добавлена в закладки!")
+                            bookMarkBtn.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Ошибка при получении закладок: \(error)")
+            }
+        }
     }
 }
 

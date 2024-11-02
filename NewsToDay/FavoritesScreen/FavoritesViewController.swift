@@ -11,6 +11,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     
     private let favoritesView = FavoritesView()
     private var favorites: [News] = []
+    let persistenceManager: PersistenceManagerProtocol = PersistenceManager.shared
 
     override func loadView() {
         self.view = favoritesView
@@ -23,7 +24,20 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         
         setupTableView()
         updateView()
-        loadMockFavorites()
+//        loadMockFavorites()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        persistenceManager.retreiveNews(completed: { [weak self] result in
+            switch result {
+            case .success(let news):
+                self?.favorites = news
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+        updateView()
     }
     
     private func setupTableView() {
@@ -84,6 +98,8 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedNews = favorites[indexPath.row]
-        // переход на DetailScreen
+        let vc = NewsDetailViewController()
+        vc.news = selectedNews
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
