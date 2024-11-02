@@ -234,19 +234,36 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 // MARK: - UITextFieldDelegate
 
 extension HomeViewController: UITextFieldDelegate {
-    
-    private func fetchSearchData(query: String) {
-        newsManager.request(SearchResultRequest(searchRequest: query, page: 1)) { result in
+    func fetchSearchData(query: String) {
+        let searchRequest = SearchResultRequest(searchText: query, page: 1)
+        guard let url = searchRequest.url else {
+            print("Ошибка создания URL")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
             DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    self.newsData = data
+                if let error = error {
+                    print("Ошибка запроса: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let data = data else {
+                    print("Данные не получены")
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let decodedData = try decoder.decode(NewsModel.self, from: data)
+                    self.newsData = decodedData.articles
                     self.homeView.collectionView.reloadSections(IndexSet(integer: 2))
-                case .failure(let error):
-                    print(error.localizedDescription)
+                } catch {
+                    print("Ошибка декодирования: \(error.localizedDescription)")
                 }
             }
         }
+        task.resume()
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -258,7 +275,7 @@ extension HomeViewController: UITextFieldDelegate {
         if textField.text != "" {
             return true
         } else {
-            textField.placeholder = "YEAAAAAHHH"
+            textField.placeholder = "Введите запрос"
             return false
         }
     }
