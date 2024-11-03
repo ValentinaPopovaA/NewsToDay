@@ -12,7 +12,11 @@ final class CategoriesViewController: UIViewController {
     // MARK: - Properties
     private let categoryManager = CategoryManager()
     private var collectionView: UICollectionView!
-    private var selectedCategories: [Category] = []
+    private var selectedCategories: [Category] = [] {
+        didSet {
+            saveSelectedCategoryNames()
+        }
+    }
     
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -38,6 +42,13 @@ final class CategoriesViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         setupUI()
         setupConstraints()
+        loadSelectedCategoryNames()
+        print(selectedCategories)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadSelectedCategoryNames()
     }
     
     // MARK: - Setup UI
@@ -82,6 +93,26 @@ final class CategoriesViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    // MARK: - Save to UserDefaults
+    private func saveSelectedCategoryNames() {
+        let categoryNames = selectedCategories.map { $0.name }
+        UserDefaults.standard.set(categoryNames, forKey: "SelectedCategoryNames")
+    }
+    
+    // MARK: - Load from UserDefaults
+    private func loadSelectedCategoryNames() {
+        if let savedCategoryNames = UserDefaults.standard.array(forKey: "SelectedCategoryNames") as? [String] {
+            selectedCategories = categoryManager.all.filter { savedCategoryNames.contains($0.name) }
+            
+            for (index, category) in categoryManager.all.enumerated() {
+                if savedCategoryNames.contains(category.name) {
+                    let indexPath = IndexPath(item: index, section: 0)
+                    collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                }
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -104,7 +135,6 @@ extension CategoriesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCategory = categoryManager.all[indexPath.row]
         
-        // Добавляем выбранную категорию, если её ещё нет в массиве
         if !selectedCategories.contains(selectedCategory) {
             selectedCategories.append(selectedCategory)
         }
@@ -113,9 +143,9 @@ extension CategoriesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let deselectedCategory = categoryManager.all[indexPath.row]
         
-        // Убираем категорию из массива, если она была выбрана
         if let index = selectedCategories.firstIndex(of: deselectedCategory) {
             selectedCategories.remove(at: index)
+            saveSelectedCategoryNames()
         }
     }
 }
