@@ -1,9 +1,13 @@
+
+https://github.com/user-attachments/assets/450888e0-214d-4236-8281-8ebebbaa179e
 # Крестики-нолики | News Today
 IOS app where the user is able to view the most popular news as well as a news feed divided into categories.
 </br></br>
 IOS-приложение, в котором пользователь может просматривать самые популярные новости, а также новостную ленту, разделенную на категории.
 
 ## Demo | Демо
+https://github.com/user-attachments/assets/885e86d4-7564-4736-9958-ad19dc692a14
+
 
 
 ## Technologies | Технологии
