@@ -1,4 +1,4 @@
-# Крестики-нолики | News Today
+# News To Day - DevRush Marathon XIII Challenge #2
 IOS app where the user is able to view the most popular news as well as a news feed divided into categories.
 </br></br>
 IOS-приложение, в котором пользователь может просматривать самые популярные новости, а также новостную ленту, разделенную на категории.
