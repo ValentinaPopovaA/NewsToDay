@@ -30,6 +30,21 @@ class CategoryManager: CategoryManagerProtocol {
                  icon: "📱"),
         Category(name: Categories.sports,
                  icon: "🏈"),
+        Category(name: Categories.gaming,
+                 icon: "🎮"),
+        Category(name: Categories.art,
+                 icon: "🎨"),
+        Category(name: Categories.life,
+                 icon: "🌞"),
+        Category(name: Categories.animals,
+                 icon: "🐻"),
+        Category(name: Categories.food,
+                 icon: "🍔"),
+        Category(name: Categories.history,
+                 icon: "📜"),
+        Category(name: Categories.fashion,
+                 icon: "👗")
+        
     ]
     
     var selectedCellIndex: [Int] = [0, 1, 2, 3, 4, 5, 6]
