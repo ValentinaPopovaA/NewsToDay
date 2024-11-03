@@ -25,19 +25,29 @@ final class HomeViewController: UIViewController {
     
     private let sections: [SectionType] = [.textField, .topics, .news, .recommended]
     private var selectedCategoryIndex: IndexPath?
+    private var selectedCategoryNames: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         view.backgroundColor = .white
+        getSelectedCategoryNames()
         setupViews()
         setDelegates()
         fetchDataNews()
-        fetchDataRecNews()
+        fetchDataRecNews(selectedCategoryNames)
     }
     
-    private func fetchDataRecNews() {
-        let categories = catManager.all.map { $0.name }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getSelectedCategoryNames()
+        fetchDataNews()
+        fetchDataRecNews(selectedCategoryNames)
+
+    }
+    
+    private func fetchDataRecNews(_ selectedCategories: [String]) {
+        let categories = selectedCategories
         newsManager.request(BrowseRecommendationRequest(category: Category(name: categories.joined(separator: ","), icon: ""))) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -62,6 +72,12 @@ final class HomeViewController: UIViewController {
                     print(error.localizedDescription)
                 }
             }
+        }
+    }
+    
+    private func getSelectedCategoryNames() {
+        if let savedCategoryNames = UserDefaults.standard.array(forKey: "SelectedCategoryNames") as? [String] {
+            selectedCategoryNames = savedCategoryNames
         }
     }
     
@@ -197,17 +213,19 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch sections[indexPath.section] {
         case .topics:
             
-            selectedCategoryIndex = indexPath
+            // Удаляем выбранную категорию и помещаем её в начало списка
             let selectedCategory = catManager.all.remove(at: indexPath.row)
             catManager.all.insert(selectedCategory, at: 0)
             
-            previousSelectedIndex = IndexPath(row: 0, section: indexPath.section)
-            selectedCategoryIndex = previousSelectedIndex
+            // Обновляем `selectedCategoryIndex` для новой позиции выбранной категории
+            selectedCategoryIndex = IndexPath(row: 0, section: indexPath.section)
             
+            // Загружаем новости для выбранной категории
             fetchDataNews(for: selectedCategory.name)
             
+            // Перезагружаем раздел и прокручиваем к выбранной ячейке
             collectionView.reloadSections(IndexSet(integer: indexPath.section))
-            collectionView.scrollToItem(at: previousSelectedIndex!, at: .left, animated: true)
+            collectionView.scrollToItem(at: selectedCategoryIndex!, at: .left, animated: true)
             return
 
         case .news:
