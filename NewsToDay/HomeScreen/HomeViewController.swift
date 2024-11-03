@@ -192,6 +192,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let category = catManager.all[indexPath.row]
             cell.configureCell(topicName: category.name)
             cell.isSelected = (indexPath == selectedCategoryIndex)
+            let isSelected = (indexPath == selectedCategoryIndex)
+            cell.updateSelectionAppearance(selected: isSelected)
             return cell
         case .news:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestNewsCollectionViewCell", for: indexPath) as! LatestNewsCollectionViewCell
@@ -226,6 +228,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             // Перезагружаем раздел и прокручиваем к выбранной ячейке
             collectionView.reloadSections(IndexSet(integer: indexPath.section))
             collectionView.scrollToItem(at: selectedCategoryIndex!, at: .left, animated: true)
+            
+            if let cell = collectionView.cellForItem(at: selectedCategoryIndex!) as? CategoriesCollectionViewCell {
+                cell.updateSelectionAppearance(selected: true)
+            }
+            
             return
 
         case .news:

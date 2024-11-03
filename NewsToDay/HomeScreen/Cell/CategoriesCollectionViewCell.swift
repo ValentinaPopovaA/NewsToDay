@@ -63,4 +63,14 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
     func configureCell(topicName: String) {
         categoryLabel.text = topicName
     }
+    
+    func updateSelectionAppearance(selected: Bool) {
+        if selected { 
+            backgroundColor = .purplePrimary
+            categoryLabel.textColor = .white
+        } else {
+            backgroundColor = .grayLighter
+            categoryLabel.textColor = .grayDark
+        }
+    }
 }
