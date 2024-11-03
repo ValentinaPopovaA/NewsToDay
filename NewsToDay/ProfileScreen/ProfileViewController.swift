@@ -20,6 +20,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     
     private var avatarImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "test")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 34
         imageView.clipsToBounds = true

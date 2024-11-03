@@ -70,11 +70,25 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         setupViews()
         setConstraints()
         hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkOnboardingStatus()
+    }
+    
+    private func checkOnboardingStatus() {
+        let hasSeenOnboarding = UserDefaults.standard.bool(forKey: "OnBoardingWasViewed")
+        
+        if !hasSeenOnboarding {
+            let onboardingVC = OnboardingViewController()
+            onboardingVC.modalPresentationStyle = .fullScreen
+            present(onboardingVC, animated: true)
+        }
     }
     
     @objc func loginButtonTapped() {
